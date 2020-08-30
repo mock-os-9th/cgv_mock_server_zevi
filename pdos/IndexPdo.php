@@ -4,7 +4,7 @@
 function test()
 {
     $pdo = pdoSqlConnect();
-    $query = "SELECT * FROM Test;";
+    $query = "SELECT * FROM user;";
 
     $st = $pdo->prepare($query);
     //    $st->execute([$param,$param]);
@@ -22,7 +22,7 @@ function test()
 function testDetail($testNo)
 {
     $pdo = pdoSqlConnect();
-    $query = "SELECT * FROM Test WHERE no = ?;";
+    $query = "SELECT * FROM user WHERE userID = ?;";
 
     $st = $pdo->prepare($query);
     $st->execute([$testNo]);
