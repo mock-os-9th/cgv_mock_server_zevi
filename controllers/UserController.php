@@ -3,7 +3,7 @@ require 'function.php';
 require 'ValidationFunction.php';
 require 'EncodingAndDecoding.php';
 require './pdos/ValidationPdo.php';
-require './pdos/UserJoinPdo.php';
+require './pdos/UserPdo.php';
 
 const JWT_SECRET_KEY = "TEST_KEYTEST_KEYTEST_KEYTEST_KEYTEST_KEYTEST_KEYTEST_KEYTEST_KEYTEST_KEYTEST_KEYTEST_KEYTEST_KEYTEST_KEY";
 

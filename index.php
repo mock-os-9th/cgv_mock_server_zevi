@@ -25,6 +25,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     /* ******************   CGV   ****************** */
     $r->addRoute('POST', '/user', ['UserController', 'userJoin']);
     $r->addRoute('POST', '/login', ['UserController', 'login']);
+    $r->addRoute('GET', '/movies', ['MovieController', 'movieListShow']);
 
     /* ********************************************* */
 });
@@ -82,6 +83,11 @@ switch ($routeInfo[0]) {
                 $handler = $routeInfo[1][1];
                 $vars = $routeInfo[2];
                 require './controllers/UserController.php';
+                break;
+            case 'MovieController':
+                $handler = $routeInfo[1][1];
+                $vars = $routeInfo[2];
+                require './controllers/MovieController.php';
                 break;
         }
 
