@@ -112,24 +112,63 @@ try {
             echo json_encode($res, JSON_NUMERIC_CHECK);
             break;
 
-
-
-
         /*
-         * API No. 0
-         * API Name : 테스트 Body & Insert API
-         * 마지막 수정 날짜 : 19.04.29
+         * API No. 2
+         * API Name : 로그인 API
+         * 마지막 수정 날짜 : 20.08.31
          */
         case "login":
             http_response_code(200);
-            $res->result = testPost($req->name);
+            if(!isValidLoginBody($req)) {
+                $res->isSuccess = FALSE;
+                $res->code = 500;
+                $res->message = "body 형식이 맞지 않습니다.";
+                echo json_encode($res, JSON_NUMERIC_CHECK);
+                break;
+            }
+            if(!isValidIdLen($req->id)) {
+                $res->isSuccess = FALSE;
+                $res->code = 511;
+                $res->message = "id는 10이상 20이하의 길이를 입력해주세요.";
+                echo json_encode($res, JSON_NUMERIC_CHECK);
+                break;
+            }
+            if(!isValidIdFormat($req->id)) {
+                $res->isSuccess = FALSE;
+                $res->code = 512;
+                $res->message = "id는 공백없이 문자, 숫자를 혼합해서 입력해주세요.";
+                echo json_encode($res, JSON_NUMERIC_CHECK);
+                break;
+            }
+            if(!isValidPwLen($req->pw)) {
+                $res->isSuccess = FALSE;
+                $res->code = 520;
+                $res->message = "pw는 10이상 20이하의 길이를 입력해주세요.";
+                echo json_encode($res, JSON_NUMERIC_CHECK);
+                break;
+            }
+            if(!isValidPwFormat($req->pw)) {
+                $res->isSuccess = FALSE;
+                $res->code = 521;
+                $res->message = "pw는 공백없이 문자, 숫자, 특수문자를 혼합해서 입력해주세요.";
+                echo json_encode($res, JSON_NUMERIC_CHECK);
+                break;
+            }
+            if(!isValidUser($req->id, $req->pw)) {
+                $res->isSuccess = FALSE;
+                $res->code = 200;
+                $res->message = "존재하지 않는 사용자입니다.";
+                echo json_encode($res, JSON_NUMERIC_CHECK);
+                break;
+            }
+            $jwt = getJWToken($req->id, $req->pw, JWT_SECRET_KEY);
+            $res->result = new stdClass();
+            $res->result->jwt = $jwt;
             $res->isSuccess = TRUE;
             $res->code = 100;
-            $res->message = "테스트 성공";
+            $res->message = "로그인 성공";
             echo json_encode($res, JSON_NUMERIC_CHECK);
             break;
-
-
 
         case "ACCESS_LOGS":
             //            header('content-type text/html charset=utf-8');

@@ -40,6 +40,7 @@ function isValidIdFormat($id) {
     $num = preg_match('/[0-9]/u', $id);
     $eng = preg_match('/[a-z]/u', $id);
     if(preg_match("/\s/u", $id)) $result = FALSE;
+    else if(preg_match("/[\!\@\#\$\%\^\&\*]/u", $id)) $result = FALSE;
     else if( $num == 0 || $eng == 0) $result = FALSE;
     return $result;
 }
@@ -114,3 +115,22 @@ function isValidAgree($phoneAgree, $idenAgree, $telAgree, $indiAgree) {
     if($phoneAgree!=TRUE || $idenAgree!=TRUE || $telAgree!=TRUE || $indiAgree!=TRUE) $result = FALSE;
     return $result;
 }
+
+
+function isValidLoginBody($req) {
+    $result = TRUE;
+    $check = array(0, 0);
+    $keyCount = 2;
+    foreach($req as $key => $value) {
+        switch($key) {
+            case "id": $check[0]++; if(gettype($value) == "string") $check[0]++; break;
+            case "pw": $check[1]++; if(gettype($value) == "string") $check[1]++; break;
+            default: return FALSE;
+        }
+    }
+    for($i=0; $i<$keyCount; $i++)
+        if($check[$i] != 2) { $result=FALSE; break;}
+    return $result;
+}
+
+
