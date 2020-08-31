@@ -38,6 +38,7 @@ function movieListShow()
         if($res[$i]['totalAud'] === null) $res[$i]['totalAud'] = "none";
         if($res[$i]['todayAud'] === null) $res[$i]['todayAud'] = "none";
         if($res[$i]['bookingRate'] === null) $res[$i]['bookingRate'] = "none";
+        unset($res[$i]['br']);
         $res[$i]['now'] = nowDecoding($res[$i]['now']);
     }
     $st = null;
