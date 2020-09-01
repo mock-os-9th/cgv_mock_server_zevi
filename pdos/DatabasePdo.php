@@ -4,7 +4,7 @@
 function pdoSqlConnect()
 {
     try {
-        $DB_HOST = "127.0.0.1"; //"15.165.101.176";
+        $DB_HOST = "cgvdb.czt1ifh2tnml.ap-northeast-2.rds.amazonaws.com";
         $DB_NAME = "cgv";
         $DB_USER = "root";
         $DB_PW = "tjdtnWkd1!";
