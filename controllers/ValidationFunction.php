@@ -134,3 +134,21 @@ function isValidLoginBody($req) {
 }
 
 
+function isValidAuthNumRequestBody($req) {
+    $result = TRUE;
+    $check = array(0, 0, 0, 0, 0);
+    $keyCount = 5;
+    foreach($req as $key => $value) {
+        switch($key) {
+            case "phone": $check[0]++; if(gettype($value) == "string") $check[0]++; break;
+            case "phoneAgree": $check[1]++; if(gettype($value) == "boolean") $check[1]++; break;
+            case "idenAgree": $check[2]++; if(gettype($value) == "boolean") $check[2]++; break;
+            case "telAgree": $check[3]++; if(gettype($value) == "boolean") $check[3]++; break;
+            case "indiAgree": $check[4]++; if(gettype($value) == "boolean") $check[4]++; break;
+            default: return FALSE;
+        }
+    }
+    for($i=0; $i<$keyCount; $i++)
+        if($check[$i] != 2) { $result=FALSE; break;}
+    return $result;
+}

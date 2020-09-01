@@ -12,7 +12,7 @@ try {
     addAccessLogs($accessLogs, $req);
     switch ($handler) {
         /*
-         * API No. 4
+         * API No. 5
          * API Name : 극장 리스트 조회 API
          * 마지막 수정 날짜 : 20.09.01
          */

@@ -1,8 +1,9 @@
 <?php
 
 
-function movieListShow()
+function theaterListShow()
 {
+    //구현해야됨
     $pdo = pdoSqlConnect();
     $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     $pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);

@@ -17,7 +17,7 @@ function ageLimitDecoding($age) {
 
 
 function nowDecoding($now) {
-    if($now == 0) return "yes";
-    else if($now == 1) return "no";
+    if($now == 1) return "yes";
+    else if($now == 0) return "no";
     else return "오류";
 }
