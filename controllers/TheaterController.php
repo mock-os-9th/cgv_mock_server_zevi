@@ -14,7 +14,7 @@ try {
         /*
          * API No. 5
          * API Name : 극장 리스트 조회 API
-         * 마지막 수정 날짜 : 20.09.01
+         * 마지막 수정 날짜 : 20.09.02
          */
         case "theaterListShow":
             http_response_code(200);

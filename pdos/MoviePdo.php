@@ -18,12 +18,12 @@ function movieListShow()
     $pdo = pdoSqlConnect();
     $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     $pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
-    $query = "select m.movieID as movieID, m.titleKo as titleKo, m.titleEn as titleEn,
+    $query = "select m.movieID as movieID, m.titleKo as titleKo, ifnull(m.titleEn, \"none\") as titleEn,
                      m.ageLimit as ageLimit, m.openDate as openDate,
                      ifnull(concat(truncate(m.todayAud*100/?, 1), \"%\"), \"none\") as bookingRate,
                      truncate(m.todayAud*100/?, 1) as br,
                      m.totalAud as totalAud, m.todayAud as todayAud, m.now as now,
-                     p.image as image
+                     ifnull(p.image, \"none\") as image
               from movie m
               left join poster p on m.movieID=p.movieID
               order by br desc;";
