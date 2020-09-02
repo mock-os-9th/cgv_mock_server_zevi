@@ -152,3 +152,20 @@ function isValidAuthNumRequestBody($req) {
         if($check[$i] != 2) { $result=FALSE; break;}
     return $result;
 }
+
+
+function isValidAuthNumCheckBody($req) {
+    $result = TRUE;
+    $check = array(0, 0);
+    $keyCount = 2;
+    foreach($req as $key => $value) {
+        switch($key) {
+            case "phone": $check[0]++; if(gettype($value) == "string") $check[0]++; break;
+            case "authNum": $check[1]++; if(gettype($value) == "string") $check[1]++; break;
+            default: return FALSE;
+        }
+    }
+    for($i=0; $i<$keyCount; $i++)
+        if($check[$i] != 2) { $result=FALSE; break;}
+    return $result;
+}

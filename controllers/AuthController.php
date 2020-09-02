@@ -3,6 +3,7 @@ require 'function.php';
 require 'SensApi.php';
 require 'ValidationFunction.php';
 require './pdos/AuthPdo.php';
+require './pdos/ValidationPdo.php';
 
 const JWT_SECRET_KEY = "TEST_KEYTEST_KEYTEST_KEYTEST_KEYTEST_KEYTEST_KEYTEST_KEYTEST_KEYTEST_KEYTEST_KEYTEST_KEYTEST_KEYTEST_KEY";
 
@@ -62,10 +63,39 @@ try {
          */
         case "authNumCheck":
             http_response_code(200);
-            $res->result = testPost($req->name);
+            if(!isValidAuthNumCheckBody($req)) {
+                $res->isSuccess = FALSE;
+                $res->code = 500;
+                $res->message = "body 형식이 맞지 않습니다.";
+                echo json_encode($res, JSON_NUMERIC_CHECK);
+                break;
+            }
+            if(!isValidPhoneLen($req->phone)) {
+                $res->isSuccess = FALSE;
+                $res->code = 530;
+                $res->message = "핸드폰 번호는 11자리를 입력해주세요.";
+                echo json_encode($res, JSON_NUMERIC_CHECK);
+                break;
+            }
+            if(!isStartPhoneNum010($req->phone)) {
+                $res->isSuccess = FALSE;
+                $res->code = 531;
+                $res->message = "핸드폰 번호는 010으로 시작해주세요.";
+                echo json_encode($res, JSON_NUMERIC_CHECK);
+                break;
+            }
+            //인증번호 체크
+            if(!isValidAuthNum($req->phone, $req->authNum)) {
+                $res->isSuccess = FALSE;
+                $res->code = 200;
+                $res->message = "입력하신 인증번호가 정확하지 않습니다.";
+                echo json_encode($res, JSON_NUMERIC_CHECK);
+                break;
+            }
+            $res->result = "success";
             $res->isSuccess = TRUE;
             $res->code = 100;
-            $res->message = "테스트 성공";
+            $res->message = "본인인증 완료";
             echo json_encode($res, JSON_NUMERIC_CHECK);
             break;
 
