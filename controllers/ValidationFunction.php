@@ -169,3 +169,10 @@ function isValidAuthNumCheckBody($req) {
         if($check[$i] != 2) { $result=FALSE; break;}
     return $result;
 }
+
+
+function isValidQueryStringStringType($str) {
+    if((strlen($str) <= 2) || $str[0] != "\"" || $str[strlen($str) - 1] != "\"") return FALSE;
+    else return TRUE;
+}
+

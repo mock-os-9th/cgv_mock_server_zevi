@@ -31,6 +31,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     $r->addRoute('GET', '/movies', ['MovieController', 'movieListShow']);
     $r->addRoute('GET', '/theaters', ['TheaterController', 'theaterListShow']);
 
+
     /* ********************************************* */
 });
 
@@ -103,6 +104,7 @@ switch ($routeInfo[0]) {
                 $vars = $routeInfo[2];
                 require './controllers/TheaterController.php';
                 break;
+
         }
 
         break;

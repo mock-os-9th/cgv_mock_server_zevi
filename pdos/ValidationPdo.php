@@ -38,3 +38,16 @@ function isValidAuthNum($phone, $authNum) {
     $pdo = null;
     return $res[0]['authNum'] == $authNum ? 1 : 0;
 }
+
+
+function isValidTitle($title) {
+    $pdo = pdoSqlConnect();
+    $query = "SELECT EXISTS(SELECT * FROM movie WHERE titleKo like ?) AS exist;";
+    $st = $pdo->prepare($query);
+    $st->execute([$title]);
+    $st->setFetchMode(PDO::FETCH_ASSOC);
+    $res = $st->fetchAll();
+    $st = null;
+    $pdo = null;
+    return intval($res[0]["exist"]);
+}
