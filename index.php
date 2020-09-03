@@ -27,6 +27,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     $r->addRoute('POST', '/auth/num', ['AuthController', 'authNumCheck']);
     $r->addRoute('POST', '/user', ['UserController', 'userJoin']);
     $r->addRoute('POST', '/login', ['UserController', 'login']);
+    $r->addRoute('POST', '/login/auto', ['UserController', 'autoLogin']);
     $r->addRoute('GET', '/movies', ['MovieController', 'movieListShow']);
     $r->addRoute('GET', '/theaters', ['TheaterController', 'theaterListShow']);
 

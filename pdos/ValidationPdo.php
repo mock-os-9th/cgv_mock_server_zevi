@@ -21,7 +21,7 @@ function isValidUser($id, $pw) {
     $st->execute([$id, $pw]);
     $st->setFetchMode(PDO::FETCH_ASSOC);
     $res = $st->fetchAll();
-    $st=null;
+    $st = null;
     $pdo = null;
     return intval($res[0]["exist"]);
 }

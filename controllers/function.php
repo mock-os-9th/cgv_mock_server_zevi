@@ -21,7 +21,10 @@ function isValidHeader($jwt, $key)
 {
     try {
         $data = getDataByJWToken($jwt, $key);
-        //로그인 함수 직접 구현 요함
+        if($data == "jwtDecodeFail") return false;
+        $expiredTime = strtotime("-1 week");
+        $tokenCreateTime = strtotime($data->date);
+        if($expiredTime >= $tokenCreateTime) return false;
         return isValidUser($data->id, $data->pw);
     } catch (\Exception $e) {
         return false;
@@ -96,7 +99,7 @@ function getDataByJWToken($jwt, $secretKey)
     try{
         $decoded = JWT::decode($jwt, $secretKey, array('HS256'));
     }catch(\Exception $e){
-        return "";
+        return "jwtDecodeFail";
     }
 
 //    print_r($decoded);

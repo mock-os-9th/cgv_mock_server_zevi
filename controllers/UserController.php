@@ -14,7 +14,7 @@ try {
     addAccessLogs($accessLogs, $req);
     switch ($handler) {
         /*
-         * API No. 1
+         * API No. 3
          * API Name : 회원가입 API
          * 마지막 수정 날짜 : 20.08.31
          */
@@ -111,9 +111,8 @@ try {
             $res->message = "회원가입 성공";
             echo json_encode($res, JSON_NUMERIC_CHECK);
             break;
-
         /*
-         * API No. 2
+         * API No. 4
          * API Name : 로그인 API
          * 마지막 수정 날짜 : 20.08.31
          */
@@ -164,6 +163,27 @@ try {
             $jwt = getJWToken($req->id, $req->pw, JWT_SECRET_KEY);
             $res->result = new stdClass();
             $res->result->jwt = $jwt;
+            $res->isSuccess = TRUE;
+            $res->code = 100;
+            $res->message = "로그인 성공";
+            echo json_encode($res, JSON_NUMERIC_CHECK);
+            break;
+        /*
+         * API No. 5
+         * API Name : 자동 로그인 API
+         * 마지막 수정 날짜 : 20.09.04
+         */
+        case "autoLogin":
+            http_response_code(200);
+            $jwt = $_SERVER["HTTP_X_ACCESS_TOKEN"];
+            if(!isValidHeader($jwt, JWT_SECRET_KEY)) {
+                $res->isSuccess = FALSE;
+                $res->code = 200;
+                $res->message = "올바르지 않은 토큰입니다.";
+                echo json_encode($res, JSON_NUMERIC_CHECK);
+                break;
+            }
+            $res->result = "success";
             $res->isSuccess = TRUE;
             $res->code = 100;
             $res->message = "로그인 성공";
