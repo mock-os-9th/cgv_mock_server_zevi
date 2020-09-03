@@ -30,10 +30,11 @@ function theaterListShow()
 
         $res[$i]['specials'] = new stdClass;
         $tempCnt = count($temp);
+        $varNum = 1;
         for($j=0; $j<$tempCnt; $j++) {
             $temp[$j]['type'] = gaunTypeDecoding($temp[$j]['type']);
             if($temp[$j]['type'] == "2D") continue;
-            $varName = "special".($j+1);
+            $varName = "special".($varNum++);
             $res[$i]['specials']->$varName = $temp[$j]['type'];
         }
         if(empty((array)$res[$i]['specials'])) $res[$i]['specials'] = "none";
