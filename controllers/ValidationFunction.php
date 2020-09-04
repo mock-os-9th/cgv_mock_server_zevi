@@ -117,6 +117,14 @@ function isValidAgree($phoneAgree, $idenAgree, $telAgree, $indiAgree) {
 }
 
 
+function isValidNameLen($name) {
+    $result = TRUE;
+    $maxLen = 10;
+    if(mb_strlen($name, 'UTF-8') > $maxLen) $result = FALSE;
+    return $result;
+}
+
+
 function isValidLoginBody($req) {
     $result = TRUE;
     $check = array(0, 0);

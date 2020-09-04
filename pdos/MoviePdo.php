@@ -6,7 +6,7 @@ function movieListShow()
     $pdo = pdoSqlConnect();
     $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     $pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
-    $query = "select ifnull(sum(todayAud), 0) as todayAudSum from movie;";
+    $query = "select ifnull(sum(todayAud), 0) as todayAudSum from Movie;";
     $st = $pdo->prepare($query);
     $st->execute();
     $st->setFetchMode(PDO::FETCH_ASSOC);
@@ -24,8 +24,8 @@ function movieListShow()
                      truncate(m.todayAud*100/?, 1) as br,
                      m.totalAud as totalAud, m.todayAud as todayAud, m.now as now,
                      ifnull(p.image, \"none\") as image
-              from movie m
-              left join poster p on m.movieID=p.movieID
+              from Movie m
+              left join Poster p on m.movieID=p.movieID
               order by br desc;";
     $st = $pdo->prepare($query);
     $st->execute([$todayAudSum, $todayAudSum]);

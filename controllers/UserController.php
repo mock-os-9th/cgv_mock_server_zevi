@@ -104,6 +104,13 @@ try {
                 echo json_encode($res, JSON_NUMERIC_CHECK);
                 break;
             }
+            if(!isValidNameLen($req->name)) {
+                $res->isSuccess = FALSE;
+                $res->code = 570;
+                $res->message = "name은 10자리 이하의 길이를 입력해주세요.";
+                echo json_encode($res, JSON_NUMERIC_CHECK);
+                break;
+            }
             $gender = genderEncoding($req->gender);
             $res->result = userJoin($req->id, $req->pw, $req->name, $req->phone, $req->email, $gender, $req->age);
             $res->isSuccess = TRUE;

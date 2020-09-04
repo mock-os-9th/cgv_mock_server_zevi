@@ -3,7 +3,7 @@
 
 function isExistId($id) {
     $pdo = pdoSqlConnect();
-    $query = "SELECT EXISTS(SELECT * FROM user WHERE id= ?) AS exist;";
+    $query = "SELECT EXISTS(SELECT * FROM User WHERE id= ?) AS exist;";
     $st = $pdo->prepare($query);
     $st->execute([$id]);
     $st->setFetchMode(PDO::FETCH_ASSOC);
@@ -16,7 +16,7 @@ function isExistId($id) {
 
 function isValidUser($id, $pw) {
     $pdo = pdoSqlConnect();
-    $query = "SELECT EXISTS(SELECT * FROM user WHERE id= ? AND pw = ?) AS exist;";
+    $query = "SELECT EXISTS(SELECT * FROM User WHERE id= ? AND pw = ?) AS exist;";
     $st = $pdo->prepare($query);
     $st->execute([$id, $pw]);
     $st->setFetchMode(PDO::FETCH_ASSOC);
@@ -29,7 +29,7 @@ function isValidUser($id, $pw) {
 
 function isValidAuthNum($phone, $authNum) {
     $pdo = pdoSqlConnect();
-    $query = "select num as authNum from auth where phone=? order by createAt desc limit 1;";
+    $query = "select num as authNum from Auth where phone=? order by createAt desc limit 1;";
     $st = $pdo->prepare($query);
     $st->execute([$phone]);
     $st->setFetchMode(PDO::FETCH_ASSOC);
@@ -42,7 +42,7 @@ function isValidAuthNum($phone, $authNum) {
 
 function isValidTitle($title) {
     $pdo = pdoSqlConnect();
-    $query = "SELECT EXISTS(SELECT * FROM movie WHERE titleKo like ?) AS exist;";
+    $query = "SELECT EXISTS(SELECT * FROM Movie WHERE titleKo like ?) AS exist;";
     $st = $pdo->prepare($query);
     $st->execute([$title]);
     $st->setFetchMode(PDO::FETCH_ASSOC);
