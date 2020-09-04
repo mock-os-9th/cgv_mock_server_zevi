@@ -5,24 +5,27 @@ function isValidUserJoinBody($req) {
     $result = TRUE;
     $check = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
     $keyCount = 11;
-    foreach($req as $key => $value) {
-        switch($key) {
-            case "id": $check[0]++; if(gettype($value) == "string") $check[0]++; break;
-            case "pw": $check[1]++; if(gettype($value) == "string") $check[1]++; break;
-            case "name": $check[2]++; if(gettype($value) == "string") $check[2]++; break;
-            case "phone": $check[3]++; if(gettype($value) == "string") $check[3]++; break;
-            case "email": $check[4]++; if(gettype($value) == "string") $check[4]++; break;
-            case "gender": $check[5]++; if(gettype($value) == "string") $check[5]++; break;
-            case "age": $check[6]++; if(gettype($value) == "integer") $check[6]++; break;
-            case "phoneAgree": $check[7]++; if(gettype($value) == "boolean") $check[7]++; break;
-            case "idenAgree": $check[8]++; if(gettype($value) == "boolean") $check[8]++; break;
-            case "telAgree": $check[9]++; if(gettype($value) == "boolean") $check[9]++; break;
-            case "indiAgree": $check[10]++; if(gettype($value) == "boolean") $check[10]++; break;
-            default: return FALSE;
+    if(empty((array)$req)) $result = FALSE;
+    else {
+        foreach($req as $key => $value) {
+            switch($key) {
+                case "id": $check[0]++; if(gettype($value) == "string") $check[0]++; break;
+                case "pw": $check[1]++; if(gettype($value) == "string") $check[1]++; break;
+                case "name": $check[2]++; if(gettype($value) == "string") $check[2]++; break;
+                case "phone": $check[3]++; if(gettype($value) == "string") $check[3]++; break;
+                case "email": $check[4]++; if(gettype($value) == "string") $check[4]++; break;
+                case "gender": $check[5]++; if(gettype($value) == "string") $check[5]++; break;
+                case "age": $check[6]++; if(gettype($value) == "integer") $check[6]++; break;
+                case "phoneAgree": $check[7]++; if(gettype($value) == "boolean") $check[7]++; break;
+                case "idenAgree": $check[8]++; if(gettype($value) == "boolean") $check[8]++; break;
+                case "telAgree": $check[9]++; if(gettype($value) == "boolean") $check[9]++; break;
+                case "indiAgree": $check[10]++; if(gettype($value) == "boolean") $check[10]++; break;
+                default: return FALSE;
+            }
         }
+        for($i=0; $i<$keyCount; $i++)
+            if($check[$i] != 2) { $result=FALSE; break;}
     }
-    for($i=0; $i<$keyCount; $i++)
-        if($check[$i] != 2) { $result=FALSE; break;}
     return $result;
 }
 
@@ -129,15 +132,18 @@ function isValidLoginBody($req) {
     $result = TRUE;
     $check = array(0, 0);
     $keyCount = 2;
-    foreach($req as $key => $value) {
-        switch($key) {
-            case "id": $check[0]++; if(gettype($value) == "string") $check[0]++; break;
-            case "pw": $check[1]++; if(gettype($value) == "string") $check[1]++; break;
-            default: return FALSE;
+    if(empty((array)$req)) $result = FALSE;
+    else {
+        foreach($req as $key => $value) {
+            switch($key) {
+                case "id": $check[0]++; if(gettype($value) == "string") $check[0]++; break;
+                case "pw": $check[1]++; if(gettype($value) == "string") $check[1]++; break;
+                default: return FALSE;
+            }
         }
+        for($i=0; $i<$keyCount; $i++)
+            if($check[$i] != 2) { $result=FALSE; break;}
     }
-    for($i=0; $i<$keyCount; $i++)
-        if($check[$i] != 2) { $result=FALSE; break;}
     return $result;
 }
 
@@ -146,18 +152,21 @@ function isValidAuthNumRequestBody($req) {
     $result = TRUE;
     $check = array(0, 0, 0, 0, 0);
     $keyCount = 5;
-    foreach($req as $key => $value) {
-        switch($key) {
-            case "phone": $check[0]++; if(gettype($value) == "string") $check[0]++; break;
-            case "phoneAgree": $check[1]++; if(gettype($value) == "boolean") $check[1]++; break;
-            case "idenAgree": $check[2]++; if(gettype($value) == "boolean") $check[2]++; break;
-            case "telAgree": $check[3]++; if(gettype($value) == "boolean") $check[3]++; break;
-            case "indiAgree": $check[4]++; if(gettype($value) == "boolean") $check[4]++; break;
-            default: return FALSE;
+    if(empty((array)$req)) $result = FALSE;
+    else {
+        foreach($req as $key => $value) {
+            switch($key) {
+                case "phone": $check[0]++; if(gettype($value) == "string") $check[0]++; break;
+                case "phoneAgree": $check[1]++; if(gettype($value) == "boolean") $check[1]++; break;
+                case "idenAgree": $check[2]++; if(gettype($value) == "boolean") $check[2]++; break;
+                case "telAgree": $check[3]++; if(gettype($value) == "boolean") $check[3]++; break;
+                case "indiAgree": $check[4]++; if(gettype($value) == "boolean") $check[4]++; break;
+                default: return FALSE;
+            }
         }
+        for($i=0; $i<$keyCount; $i++)
+            if($check[$i] != 2) { $result=FALSE; break;}
     }
-    for($i=0; $i<$keyCount; $i++)
-        if($check[$i] != 2) { $result=FALSE; break;}
     return $result;
 }
 
@@ -166,15 +175,18 @@ function isValidAuthNumCheckBody($req) {
     $result = TRUE;
     $check = array(0, 0);
     $keyCount = 2;
-    foreach($req as $key => $value) {
-        switch($key) {
-            case "phone": $check[0]++; if(gettype($value) == "string") $check[0]++; break;
-            case "authNum": $check[1]++; if(gettype($value) == "string") $check[1]++; break;
-            default: return FALSE;
+    if(empty((array)$req)) $result = FALSE;
+    else {
+        foreach($req as $key => $value) {
+            switch($key) {
+                case "phone": $check[0]++; if(gettype($value) == "string") $check[0]++; break;
+                case "authNum": $check[1]++; if(gettype($value) == "string") $check[1]++; break;
+                default: return FALSE;
+            }
         }
+        for($i=0; $i<$keyCount; $i++)
+            if($check[$i] != 2) { $result=FALSE; break;}
     }
-    for($i=0; $i<$keyCount; $i++)
-        if($check[$i] != 2) { $result=FALSE; break;}
     return $result;
 }
 
@@ -184,3 +196,22 @@ function isValidQueryStringStringType($str) {
     else return TRUE;
 }
 
+
+function isValidUTheaterListShowBody($req) {
+    $result = TRUE;
+    $check = array(0, 0);
+    $keyCount = 2;
+    if(empty((array)$req)) $result = FALSE;
+    else {
+        foreach($req as $key => $value) {
+            switch($key) {
+                case "longitude": $check[0]++; if(gettype($value) == "string") $check[0]++; break;
+                case "latitude": $check[1]++; if(gettype($value) == "string") $check[1]++; break;
+                default: return FALSE;
+            }
+        }
+        for($i=0; $i<$keyCount; $i++)
+            if($check[$i] != 2) { $result=FALSE; break;}
+    }
+    return $result;
+}
