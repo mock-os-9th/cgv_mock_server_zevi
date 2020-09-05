@@ -64,7 +64,7 @@ function scheduleShow($longitude, $latitude)
     //상영시간표 출력
     $query = "select sch.scheduleID as scheduleID,
                      t.name as theater,
-                     scn.description as screenName,
+                     scn.description as screen,
                      scn.type as screenType,
                      scn.capacity as capacity,
                      concat(date_format(sch.startDateTime, '%Y.%c.%e '), '(',substr('일월화수목금토', dayofweek(sch.startDateTime), 1), ')') as date,
