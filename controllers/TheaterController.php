@@ -21,14 +21,14 @@ try {
          */
         case "theaterListShow":
             http_response_code(200);
-            if(!isValidUTheaterListShowBody($req)) {
+            if(!isValidTheaterListShowBody($req)) {
                 $res->isSuccess = FALSE;
                 $res->code = 500;
                 $res->message = "body 형식이 맞지 않습니다.";
                 echo json_encode($res);
                 break;
             }
-            if(isset($_GET['title'])) { //title=""도 확인해보자 이 밸리데이션함수에서 길이2이하 빼기
+            if(isset($_GET['title'])) {
                 if(!isValidQueryStringStringType($_GET['title'])) {
                     $res->isSuccess = FALSE;
                     $res->code = 200;

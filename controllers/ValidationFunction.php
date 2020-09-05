@@ -192,12 +192,31 @@ function isValidAuthNumCheckBody($req) {
 
 
 function isValidQueryStringStringType($str) {
-    if((strlen($str) <= 2) || $str[0] != "\"" || $str[strlen($str) - 1] != "\"") return FALSE;
+    if(strlen($str) <= 2 || $str[0] != "\"" || $str[strlen($str) - 1] != "\"") return FALSE;
     else return TRUE;
 }
 
 
-function isValidUTheaterListShowBody($req) {
+function isValidTheaterListShowBody($req) {
+    $result = TRUE;
+    $check = array(0, 0);
+    $keyCount = 2;
+    if(empty((array)$req)) $result = FALSE;
+    else {
+        foreach($req as $key => $value) {
+            switch($key) {
+                case "longitude": $check[0]++; if(gettype($value) == "string") $check[0]++; break;
+                case "latitude": $check[1]++; if(gettype($value) == "string") $check[1]++; break;
+                default: return FALSE;
+            }
+        }
+        for($i=0; $i<$keyCount; $i++)
+            if($check[$i] != 2) { $result=FALSE; break;}
+    }
+    return $result;
+}
+
+function isValidScheduleShowBody($req) {
     $result = TRUE;
     $check = array(0, 0);
     $keyCount = 2;

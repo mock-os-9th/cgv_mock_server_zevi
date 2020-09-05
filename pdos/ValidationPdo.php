@@ -42,9 +42,22 @@ function isValidAuthNum($phone, $authNum) {
 
 function isValidTitle($title) {
     $pdo = pdoSqlConnect();
-    $query = "SELECT EXISTS(SELECT * FROM Movie WHERE titleKo like ?) AS exist;";
+    $query = "SELECT EXISTS(SELECT * FROM Movie WHERE titleKo = ?) AS exist;";
     $st = $pdo->prepare($query);
     $st->execute([$title]);
+    $st->setFetchMode(PDO::FETCH_ASSOC);
+    $res = $st->fetchAll();
+    $st = null;
+    $pdo = null;
+    return intval($res[0]["exist"]);
+}
+
+
+function isValidTheater($theater) {
+    $pdo = pdoSqlConnect();
+    $query = "SELECT EXISTS(SELECT * FROM Theater WHERE name = ?) AS exist;";
+    $st = $pdo->prepare($query);
+    $st->execute([$theater]);
     $st->setFetchMode(PDO::FETCH_ASSOC);
     $res = $st->fetchAll();
     $st = null;

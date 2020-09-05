@@ -7,7 +7,8 @@ function theaterListShow($longitude, $latitude)
     $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     $pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
     $query = "select distinct t.area as area, 
-                              t.theaterID as theater, 
+                              t.theaterID as theaterID, 
+                              t.name as theater, 
                               t.oldAddress as oldAddress, 
                               t.newAddress as newAddress 
               from Theater t";
@@ -15,10 +16,10 @@ function theaterListShow($longitude, $latitude)
         $title = $_GET['title'];
         $query = $query." join Screen scn on scn.theaterID=t.theaterID
                           join Schedule sch on sch.screenID=scn.screenID
-                          join Movie M on sch.movieID = M.movieID
-                          where M.titleKo=".$title;
+                          join Movie m on sch.movieID = m.movieID
+                          where m.titleKo=".$title;
     }
-    $query = $query." order by area ASC, theater asc;";
+    $query = $query." order by area ASC, theaterID asc;";
     $st = $pdo->prepare($query);
     $st->execute();
     $st->setFetchMode(PDO::FETCH_ASSOC);
@@ -35,7 +36,7 @@ function theaterListShow($longitude, $latitude)
         unset($res[$i]['oldAddress']); unset($res[$i]['newAddress']);
 
         //타입출력
-        $query = "select distinct type from Screen where theaterID=\"".$res[$i]['theater']."\" order by type asc;";
+        $query = "select distinct type from Screen where theaterID=\"".$res[$i]['theaterID']."\" order by type asc;";
         $st = $pdo->prepare($query);
         $st->execute();
         $st->setFetchMode(PDO::FETCH_ASSOC);
@@ -45,7 +46,7 @@ function theaterListShow($longitude, $latitude)
         $tempCnt = count($temp);
         $varNum = 1;
         for($j=0; $j<$tempCnt; $j++) {
-            $temp[$j]['type'] = gaunTypeDecoding($temp[$j]['type']);
+            $temp[$j]['type'] = screenTypeDecoding($temp[$j]['type']);
             if($temp[$j]['type'] == "2D") continue;
             $varName = "special".($varNum++);
             $res[$i]['specials']->$varName = $temp[$j]['type'];
@@ -53,7 +54,7 @@ function theaterListShow($longitude, $latitude)
         if(empty((array)$res[$i]['specials'])) $res[$i]['specials'] = "none";
 
         $res[$i]['area'] = areaDecoding($res[$i]['area']);
-        $res[$i]['theater'] = theaterDecoding($res[$i]['theater']);
+        unset($res[$i]['theaterID']);
     }
 
     $st = null;

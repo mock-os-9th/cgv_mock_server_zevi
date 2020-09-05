@@ -30,6 +30,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     $r->addRoute('POST', '/login/auto', ['UserController', 'autoLogin']);
     $r->addRoute('GET', '/movies', ['MovieController', 'movieListShow']);
     $r->addRoute('POST', '/theaters', ['TheaterController', 'theaterListShow']);
+    $r->addRoute('POST', '/schedule', ['ScheduleController', 'scheduleShow']);
 
 
     /* ********************************************* */
@@ -103,6 +104,11 @@ switch ($routeInfo[0]) {
                 $handler = $routeInfo[1][1];
                 $vars = $routeInfo[2];
                 require './controllers/TheaterController.php';
+                break;
+            case 'ScheduleController':
+                $handler = $routeInfo[1][1];
+                $vars = $routeInfo[2];
+                require './controllers/ScheduleController.php';
                 break;
 
         }
