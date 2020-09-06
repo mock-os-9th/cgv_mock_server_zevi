@@ -68,12 +68,12 @@ function SeatListShow($scheduleID)
             }
         }
         //이미 예매된 좌석인지 붙이기
-        $seatInfo[$i]['isEmpty'] = "yes";
+        $seatInfo[$i]['isEmpty'] = TRUE;
         $reservationInfoCnt = count($reservationInfo);
         for($k=0; $k<$reservationInfoCnt; $k++) {
             if($seatInfo[$i]['seatID'] == $reservationInfo[$k]['seatID']) {
                 if($reservationInfo[$k]['state'] == $paymentCompleteState) {
-                    $seatInfo[$i]['isEmpty'] = "no";
+                    $seatInfo[$i]['isEmpty'] = FALSE;
                 }
             }
         }
