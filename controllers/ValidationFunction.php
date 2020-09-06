@@ -234,3 +234,79 @@ function isValidScheduleShowBody($req) {
     }
     return $result;
 }
+
+
+function isValidBookingBody($req) {
+    $result = TRUE;
+    $check = array(0, 0, 0, 0, 0, 0);
+    $keyCount = 6;
+    if(empty((array)$req)) $result = FALSE;
+    else {
+        foreach($req as $key => $value) {
+            switch($key) {
+                case "scheduleID": $check[0]++; if(gettype($value) == "string") $check[0]++; break;
+                case "seatID": $check[1]++; if(gettype($value) == "string") $check[1]++; break;
+                case "priceType": $check[2]++; if(gettype($value) == "string") $check[2]++; break;
+                case "price": $check[3]++; if(gettype($value) == "integer") $check[3]++; break;
+                case "method": $check[4]++; if(gettype($value) == "string") $check[4]++; break;
+                case "isSuccess": $check[5]++; if(gettype($value) == "boolean") $check[5]++; break;
+                default: return FALSE;
+            }
+        }
+        for($i=0; $i<$keyCount; $i++)
+            if($check[$i] != 2) { $result=FALSE; break;}
+    }
+    return $result;
+}
+
+
+function isValidScheduleIDLen($scheduleID) {
+    $result = TRUE;
+    $constScheduleIDLen = 21;
+    if(strlen($scheduleID) != $constScheduleIDLen) $result = FALSE;
+    return $result;
+}
+
+
+function isStartScheduleID005($scheduleID) {
+    $result = TRUE;
+    if(substr($scheduleID, 0, 3) != "005") $result = FALSE;
+    return $result;
+}
+
+
+function isValidSeatIDLen($seatID) {
+    $result = TRUE;
+    $constSeatIDLen = 21;
+    if(strlen($seatID) != $constSeatIDLen) $result = FALSE;
+    return $result;
+}
+
+
+function isStartSeatID003($seatID) {
+    $result = TRUE;
+    if(substr($seatID, 0, 3) != "003") $result = FALSE;
+    return $result;
+}
+
+
+function isValidPriceType($priceType) {
+    $result = TRUE;
+    if($priceType != "일반" && $priceType != "청소년" && $priceType != "우대") $result=FALSE;
+    return $result;
+}
+
+
+//결제 방식 예외처리 추가예정
+function isValidPaymentMethod($method) {
+    $result = TRUE;
+    if($method != "1") $result = FALSE;
+    return $result;
+}
+
+
+function isSuccessPayment($isSuccess) {
+    $result = TRUE;
+    if($isSuccess != TRUE) $result = FALSE;
+    return $result;
+}

@@ -80,3 +80,29 @@ function isValidScheduleID($scheduleID) {
     $pdo = null;
     return intval($res[0]["exist"]);
 }
+
+
+function isValidSeatID($seatID) {
+    $pdo = pdoSqlConnect();
+    $query = "SELECT EXISTS(SELECT * FROM Seat WHERE seatID = ?) AS exist;";
+    $st = $pdo->prepare($query);
+    $st->execute([$seatID]);
+    $st->setFetchMode(PDO::FETCH_ASSOC);
+    $res = $st->fetchAll();
+    $st = null;
+    $pdo = null;
+    return intval($res[0]["exist"]);
+}
+
+
+function isSelectedSeat($scheduleID, $seatID) {
+    $pdo = pdoSqlConnect();
+    $query = "SELECT EXISTS(SELECT * FROM Reservation WHERE scheduleID = ? and seatID = ?) AS exist;";
+    $st = $pdo->prepare($query);
+    $st->execute([$scheduleID, $seatID]);
+    $st->setFetchMode(PDO::FETCH_ASSOC);
+    $res = $st->fetchAll();
+    $st = null;
+    $pdo = null;
+    return intval($res[0]["exist"]);
+}

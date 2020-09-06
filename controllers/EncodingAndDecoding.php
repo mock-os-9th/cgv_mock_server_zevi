@@ -12,14 +12,14 @@ function ageLimitDecoding($age) {
     else if($age == 12) return "12";
     else if($age == 15) return "15";
     else if($age == 20) return "청불";
-    else return "오류";
+    else return "ageLimitDecodingError";
 }
 
 
 function nowDecoding($now) {
     if($now == 1) return "yes";
     else if($now == 0) return "no";
-    else return "오류";
+    else return "nowDecodingError";
 }
 
 
@@ -106,5 +106,16 @@ function seatTypeDecoding($seatType) {
         case 6: return "소파";
         case 7: return "리클라이너";
         case 8: return "커플소파";
+        default: return "seatTypeDecodingError";
+    }
+}
+
+
+function priceTypeEncoding($priceType) {
+    switch($priceType) {
+        case "일반": return 0;
+        case "청소년": return 1;
+        case "우대": return 2;
+        default: return "priceTypeEncodingError";
     }
 }
