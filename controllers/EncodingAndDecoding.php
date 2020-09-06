@@ -60,3 +60,51 @@ function areaDecoding($area) {
         default: return "areaDecodingFuncError";
     }
 }
+
+
+function seatLineDecoding($line) {
+    switch($line) {
+        case 1: return "A";
+        case 2: return "B";
+        case 3: return "C";
+        case 4: return "D";
+        case 5: return "E";
+        case 6: return "F";
+        case 7: return "G";
+        case 8: return "H";
+        case 9: return "I";
+        case 10: return "G";
+        case 11: return "K";
+        case 12: return "L";
+        case 13: return "M";
+        case 14: return "N";
+        case 15: return "O";
+        case 16: return "P";
+        case 17: return "Q";
+        case 18: return "R";
+        case 19: return "S";
+        case 20: return "T";
+        case 21: return "U";
+        case 22: return "V";
+        case 23: return "W";
+        case 24: return "X";
+        case 25: return "Y";
+        case 26: return "Z";
+        default: return "seatLineDecodingError";
+    }
+}
+
+
+function seatTypeDecoding($seatType) {
+    switch($seatType) {
+        case 0: return "이코노미석";
+        case 1: return "스탠다드석";
+        case 2: return "프라임석";
+        case 3: return "장애인석";
+        case 4: return "sweet box";
+        case 5: return "프리미엄석";
+        case 6: return "소파";
+        case 7: return "리클라이너";
+        case 8: return "커플소파";
+    }
+}

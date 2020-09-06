@@ -67,3 +67,16 @@ function isValidTheaterID($theaterID) {
     $pdo = null;
     return intval($res[0]["exist"]);
 }
+
+
+function isValidScheduleID($scheduleID) {
+    $pdo = pdoSqlConnect();
+    $query = "SELECT EXISTS(SELECT * FROM Schedule WHERE scheduleID = ?) AS exist;";
+    $st = $pdo->prepare($query);
+    $st->execute([$scheduleID]);
+    $st->setFetchMode(PDO::FETCH_ASSOC);
+    $res = $st->fetchAll();
+    $st = null;
+    $pdo = null;
+    return intval($res[0]["exist"]);
+}
