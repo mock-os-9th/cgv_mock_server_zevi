@@ -29,14 +29,17 @@ function isValidUser($id, $pw) {
 
 function isValidAuthNum($phone, $authNum) {
     $pdo = pdoSqlConnect();
-    $query = "select num as authNum from Auth where phone=? order by createAt desc limit 1;";
+    $query = "select num as authNum from Auth 
+              where phone=? and createAt > date_sub(now(), interval 3 minute)
+              order by createAt desc limit 1;";
     $st = $pdo->prepare($query);
     $st->execute([$phone]);
     $st->setFetchMode(PDO::FETCH_ASSOC);
     $res = $st->fetchAll();
     $st = null;
     $pdo = null;
-    return $res[0]['authNum'] == $authNum ? 1 : 0;
+    if(count($res) == 0) return FALSE;
+    return $res[0]['authNum'] == $authNum ? TRUE : FALSE;
 }
 
 
