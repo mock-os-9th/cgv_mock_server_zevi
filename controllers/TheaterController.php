@@ -28,18 +28,18 @@ try {
                 echo json_encode($res);
                 break;
             }
-            if(isset($_GET['title'])) {
-                if(!isValidQueryStringStringType($_GET['title'])) {
+            if(isset($_GET['movieID'])) {
+                if(!isValidQueryStringStringType($_GET['movieID'])) {
                     $res->isSuccess = FALSE;
                     $res->code = 200;
-                    $res->message = "쿼리스트링 title이 올바른 형식이 아닙니다.";
+                    $res->message = "쿼리스트링 movieID가 올바른 형식이 아닙니다.";
                     echo json_encode($res);
                     break;
                 }
-                else if(!isValidTitle(substr($_GET['title'], 1, strlen($_GET['title']) - 2))) {
+                else if(!isValidMovieID(substr($_GET['movieID'], 1, strlen($_GET['movieID']) - 2))) {
                     $res->isSuccess = FALSE;
                     $res->code = 210;
-                    $res->message = "존재하지 않은 title입니다.";
+                    $res->message = "존재하지 않은 movieID입니다.";
                     echo json_encode($res);
                     break;
                 }

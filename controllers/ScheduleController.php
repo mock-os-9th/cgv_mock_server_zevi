@@ -28,114 +28,114 @@ try {
                 echo json_encode($res);
                 break;
             }
-            if(isset($_GET['title1'])) {
-                if(!isValidQueryStringStringType($_GET['title1'])) {
+            if(isset($_GET['movieID1'])) {
+                if(!isValidQueryStringStringType($_GET['movieID1'])) {
                     $res->isSuccess = FALSE;
                     $res->code = 210;
-                    $res->message = "쿼리스트링 title1이 올바른 형식이 아닙니다.";
+                    $res->message = "쿼리스트링 movieID1이 올바른 형식이 아닙니다.";
                     echo json_encode($res);
                     break;
                 }
-                else if(!isValidTitle(substr($_GET['title1'], 1, strlen($_GET['title1']) - 2))) {
+                else if(!isValidMovieID(substr($_GET['movieID1'], 1, strlen($_GET['movieID1']) - 2))) {
                     $res->isSuccess = FALSE;
                     $res->code = 211;
-                    $res->message = "존재하지 않은 title1입니다.";
+                    $res->message = "존재하지 않은 movieID1입니다.";
                     echo json_encode($res);
                     break;
                 }
             }
-            if(isset($_GET['title2'])) {
-                if(!isValidQueryStringStringType($_GET['title2'])) {
+            if(isset($_GET['movieID2'])) {
+                if(!isValidQueryStringStringType($_GET['movieID2'])) {
                     $res->isSuccess = FALSE;
                     $res->code = 220;
-                    $res->message = "쿼리스트링 title2이 올바른 형식이 아닙니다.";
+                    $res->message = "쿼리스트링 movieID2이 올바른 형식이 아닙니다.";
                     echo json_encode($res);
                     break;
                 }
-                else if(!isValidTitle(substr($_GET['title2'], 1, strlen($_GET['title2']) - 2))) {
+                else if(!isValidMovieID(substr($_GET['movieID2'], 1, strlen($_GET['movieID2']) - 2))) {
                     $res->isSuccess = FALSE;
                     $res->code = 221;
-                    $res->message = "존재하지 않은 title2입니다.";
+                    $res->message = "존재하지 않은 movieID2입니다.";
                     echo json_encode($res);
                     break;
                 }
             }
-            if(isset($_GET['theater1'])) {
-                if(!isValidQueryStringStringType($_GET['theater1'])) {
+            if(isset($_GET['theaterID1'])) {
+                if(!isValidQueryStringStringType($_GET['theaterID1'])) {
                     $res->isSuccess = FALSE;
                     $res->code = 310;
-                    $res->message = "쿼리스트링 theater1이 올바른 형식이 아닙니다.";
+                    $res->message = "쿼리스트링 theaterID1이 올바른 형식이 아닙니다.";
                     echo json_encode($res);
                     break;
                 }
-                else if(!isValidTheater(substr($_GET['theater1'], 1, strlen($_GET['theater1']) - 2))) {
+                else if(!isValidTheaterID(substr($_GET['theaterID1'], 1, strlen($_GET['theaterID1']) - 2))) {
                     $res->isSuccess = FALSE;
                     $res->code = 311;
-                    $res->message = "존재하지 않은 theater1입니다.";
+                    $res->message = "존재하지 않은 theaterID1입니다.";
                     echo json_encode($res);
                     break;
                 }
             }
-            if(isset($_GET['theater2'])) {
-                if(!isValidQueryStringStringType($_GET['theater2'])) {
+            if(isset($_GET['theaterID2'])) {
+                if(!isValidQueryStringStringType($_GET['theaterID2'])) {
                     $res->isSuccess = FALSE;
                     $res->code = 320;
-                    $res->message = "쿼리스트링 theater2이 올바른 형식이 아닙니다.";
+                    $res->message = "쿼리스트링 theaterID2이 올바른 형식이 아닙니다.";
                     echo json_encode($res);
                     break;
                 }
-                else if(!isValidTheater(substr($_GET['theater2'], 1, strlen($_GET['theater2']) - 2))) {
+                else if(!isValidTheaterID(substr($_GET['theaterID2'], 1, strlen($_GET['theaterID2']) - 2))) {
                     $res->isSuccess = FALSE;
                     $res->code = 321;
-                    $res->message = "존재하지 않은 theater2입니다.";
+                    $res->message = "존재하지 않은 theaterID2입니다.";
                     echo json_encode($res);
                     break;
                 }
             }
-            if(isset($_GET['theater3'])) {
-                if(!isValidQueryStringStringType($_GET['theater3'])) {
+            if(isset($_GET['theaterID3'])) {
+                if(!isValidQueryStringStringType($_GET['theaterID3'])) {
                     $res->isSuccess = FALSE;
                     $res->code = 330;
-                    $res->message = "쿼리스트링 theater3이 올바른 형식이 아닙니다.";
+                    $res->message = "쿼리스트링 theaterID3이 올바른 형식이 아닙니다.";
                     echo json_encode($res);
                     break;
                 }
-                else if(!isValidTheater(substr($_GET['theater3'], 1, strlen($_GET['theater3']) - 2))) {
+                else if(!isValidTheaterID(substr($_GET['theaterID3'], 1, strlen($_GET['theaterID3']) - 2))) {
                     $res->isSuccess = FALSE;
                     $res->code = 331;
-                    $res->message = "존재하지 않은 theater3입니다.";
+                    $res->message = "존재하지 않은 theaterID3입니다.";
                     echo json_encode($res);
                     break;
                 }
             }
-            if(isset($_GET['theater4'])) {
-                if(!isValidQueryStringStringType($_GET['theater4'])) {
+            if(isset($_GET['theaterID4'])) {
+                if(!isValidQueryStringStringType($_GET['theaterID4'])) {
                     $res->isSuccess = FALSE;
                     $res->code = 340;
-                    $res->message = "쿼리스트링 theater3이 올바른 형식이 아닙니다.";
+                    $res->message = "쿼리스트링 theaterID4이 올바른 형식이 아닙니다.";
                     echo json_encode($res);
                     break;
                 }
-                else if(!isValidTheater(substr($_GET['theater4'], 1, strlen($_GET['theater4']) - 2))) {
+                else if(!isValidTheaterID(substr($_GET['theaterID4'], 1, strlen($_GET['theaterID4']) - 2))) {
                     $res->isSuccess = FALSE;
                     $res->code = 341;
-                    $res->message = "존재하지 않은 theater4입니다.";
+                    $res->message = "존재하지 않은 theaterID4입니다.";
                     echo json_encode($res);
                     break;
                 }
             }
-            if(isset($_GET['theater5'])) {
-                if(!isValidQueryStringStringType($_GET['theater5'])) {
+            if(isset($_GET['theaterID5'])) {
+                if(!isValidQueryStringStringType($_GET['theaterID5'])) {
                     $res->isSuccess = FALSE;
                     $res->code = 350;
-                    $res->message = "쿼리스트링 theater5이 올바른 형식이 아닙니다.";
+                    $res->message = "쿼리스트링 theaterID5이 올바른 형식이 아닙니다.";
                     echo json_encode($res);
                     break;
                 }
-                else if(!isValidTheater(substr($_GET['theater5'], 1, strlen($_GET['theater5']) - 2))) {
+                else if(!isValidTheaterID(substr($_GET['theaterID5'], 1, strlen($_GET['theaterID5']) - 2))) {
                     $res->isSuccess = FALSE;
                     $res->code = 351;
-                    $res->message = "존재하지 않은 theater5입니다.";
+                    $res->message = "존재하지 않은 theaterID5입니다.";
                     echo json_encode($res);
                     break;
                 }

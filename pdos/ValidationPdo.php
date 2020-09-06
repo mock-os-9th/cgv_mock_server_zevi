@@ -43,11 +43,11 @@ function isValidAuthNum($phone, $authNum) {
 }
 
 
-function isValidTitle($title) {
+function isValidMovieID($movieID) {
     $pdo = pdoSqlConnect();
-    $query = "SELECT EXISTS(SELECT * FROM Movie WHERE titleKo = ?) AS exist;";
+    $query = "SELECT EXISTS(SELECT * FROM Movie WHERE movieID = ?) AS exist;";
     $st = $pdo->prepare($query);
-    $st->execute([$title]);
+    $st->execute([$movieID]);
     $st->setFetchMode(PDO::FETCH_ASSOC);
     $res = $st->fetchAll();
     $st = null;
@@ -56,11 +56,11 @@ function isValidTitle($title) {
 }
 
 
-function isValidTheater($theater) {
+function isValidTheaterID($theaterID) {
     $pdo = pdoSqlConnect();
-    $query = "SELECT EXISTS(SELECT * FROM Theater WHERE name = ?) AS exist;";
+    $query = "SELECT EXISTS(SELECT * FROM Theater WHERE theaterID = ?) AS exist;";
     $st = $pdo->prepare($query);
-    $st->execute([$theater]);
+    $st->execute([$theaterID]);
     $st->setFetchMode(PDO::FETCH_ASSOC);
     $res = $st->fetchAll();
     $st = null;

@@ -6,18 +6,18 @@ function theaterListShow($longitude, $latitude)
     $pdo = pdoSqlConnect();
     $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     $pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
-    $query = "select distinct t.area as area, 
-                              t.theaterID as theaterID, 
+    $query = "select distinct t.theaterID as theaterID, 
+                              t.area as area,  
                               t.name as theater, 
                               t.oldAddress as oldAddress, 
                               t.newAddress as newAddress 
               from Theater t";
-    if(isset($_GET['title'])) {
-        $title = $_GET['title'];
+    if(isset($_GET['movieID'])) {
+        $movieID = $_GET['movieID'];
         $query = $query." join Screen scn on scn.theaterID=t.theaterID
                           join Schedule sch on sch.screenID=scn.screenID
                           join Movie m on sch.movieID = m.movieID
-                          where m.titleKo=".$title;
+                          where m.movieID=".$movieID;
     }
     $query = $query." order by area ASC, theaterID asc;";
     $st = $pdo->prepare($query);
@@ -54,7 +54,6 @@ function theaterListShow($longitude, $latitude)
         if(empty((array)$res[$i]['specials'])) $res[$i]['specials'] = "none";
 
         $res[$i]['area'] = areaDecoding($res[$i]['area']);
-        unset($res[$i]['theaterID']);
     }
 
     $st = null;

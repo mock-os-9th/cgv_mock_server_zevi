@@ -9,21 +9,21 @@ function scheduleShow($longitude, $latitude)
 
     //쿼리스트링 값 저장하기
     $isSetTitle = FALSE;
-    $title1 = "\"\""; $title2 = "\"\"";
-    if(isset($_GET['title1']) || isset($_GET['title2'])) {
+    $movieID1 = "\"\""; $movieID2 = "\"\"";
+    if(isset($_GET['movieID1']) || isset($_GET['movieID2'])) {
         $isSetTitle = TRUE;
-        if(isset($_GET['title1'])) $title1 = $_GET['title1'];
-        if(isset($_GET['title2'])) $title2 = $_GET['title2'];
+        if(isset($_GET['movieID1'])) $movieID1 = $_GET['movieID1'];
+        if(isset($_GET['movieID2'])) $movieID2 = $_GET['movieID2'];
     }
     $isSetTheater = FALSE;
-    $theater1 = "\"\""; $theater2 = "\"\""; $theater3 = "\"\""; $theater4 = "\"\""; $theater5 = "\"\"";
-    if(isset($_GET['theater1']) || isset($_GET['theater2']) || isset($_GET['theater3']) || isset($_GET['theater4']) || isset($_GET['theater5'])) {
+    $theaterID1 = "\"\""; $theaterID2 = "\"\""; $theaterID3 = "\"\""; $theaterID4 = "\"\""; $theaterID5 = "\"\"";
+    if(isset($_GET['theaterID1']) || isset($_GET['theaterID2']) || isset($_GET['theaterID3']) || isset($_GET['theaterID4']) || isset($_GET['theaterID5'])) {
         $isSetTheater = TRUE;
-        if(isset($_GET['theater1'])) $theater1 = $_GET['theater1'];
-        if(isset($_GET['theater2'])) $theater2 = $_GET['theater2'];
-        if(isset($_GET['theater3'])) $theater3 = $_GET['theater3'];
-        if(isset($_GET['theater4'])) $theater4 = $_GET['theater4'];
-        if(isset($_GET['theater5'])) $theater5 = $_GET['theater5'];
+        if(isset($_GET['theaterID1'])) $theaterID1 = $_GET['theaterID1'];
+        if(isset($_GET['theaterID2'])) $theaterID2 = $_GET['theaterID2'];
+        if(isset($_GET['theaterID3'])) $theaterID3 = $_GET['theaterID3'];
+        if(isset($_GET['theaterID4'])) $theaterID4 = $_GET['theaterID4'];
+        if(isset($_GET['theaterID5'])) $theaterID5 = $_GET['theaterID5'];
     }
 
     //영화관 출력 -> 지오코딩 api로 거리 계산 끝내놓고 상영시간표 출력 한 뒤 영화관과 거리 매칭시키기
@@ -37,11 +37,11 @@ function scheduleShow($longitude, $latitude)
         $query = $query." join Screen scn on scn.theaterID=t.theaterID
                           join Schedule sch on sch.screenID=scn.screenID
                           join Movie m on sch.movieID = m.movieID
-                          where m.titleKo in (".$title1.", ".$title2.")";
+                          where m.movieID in (".$movieID1.", ".$movieID2.")";
     }
     if($isSetTheater) {
-        if($isSetTitle) $query = $query." or t.name in (".$theater1.", ".$theater2.", ".$theater3.", ".$theater4.", ".$theater5.")";
-        else $query = $query." where t.name in (".$theater1.", ".$theater2.", ".$theater3.", ".$theater4.", ".$theater5.")";
+        if($isSetTitle) $query = $query." or t.theaterID in (".$theaterID1.", ".$theaterID2.", ".$theaterID3.", ".$theaterID4.", ".$theaterID5.")";
+        else $query = $query." where t.theaterID in (".$theaterID1.", ".$theaterID2.", ".$theaterID3.", ".$theaterID4.", ".$theaterID5.")";
     }
     $query = $query." order by area ASC, theaterID asc;";
     $st = $pdo->prepare($query);
@@ -79,11 +79,11 @@ function scheduleShow($longitude, $latitude)
               join Theater t on t.theaterID=scn.theaterID
               join Movie m on m.movieID=sch.movieID";
     if($isSetTitle) {
-        $query = $query." where m.titleKo in (".$title1.", ".$title2.")";
+        $query = $query." where m.movieID in (".$movieID1.", ".$movieID2.")";
     }
     if($isSetTheater) {
-        if($isSetTitle) $query = $query." and t.name in (".$theater1.", ".$theater2.", ".$theater3.", ".$theater4.", ".$theater5.")";
-        else $query = $query." where t.name in (".$theater1.", ".$theater2.", ".$theater3.", ".$theater4.", ".$theater5.")";
+        if($isSetTitle) $query = $query." and t.theaterID in (".$theaterID1.", ".$theaterID2.", ".$theaterID3.", ".$theaterID4.", ".$theaterID5.")";
+        else $query = $query." where t.theaterID in (".$theaterID1.", ".$theaterID2.", ".$theaterID3.", ".$theaterID4.", ".$theaterID5.")";
     }
     if(!$isSetTitle && !$isSetTheater) {
         $query = $query." where sch.startDateTime > date_sub(now(), interval 40 minute)";
