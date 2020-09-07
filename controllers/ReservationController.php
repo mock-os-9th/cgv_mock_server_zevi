@@ -59,7 +59,9 @@ try {
             }
             $seatCnt = count($req->seats);
             for($i=0; $i<$seatCnt; $i++) {
+                $check = FALSE;
                 if(!isValidSeatIDLen($req->seats[$i]->seatID)) {
+                    $check = TRUE;
                     $res->isSuccess = FALSE;
                     $res->code = 520;
                     $res->message = "seatID는 21자리를 입력해주세요.";
@@ -67,6 +69,7 @@ try {
                     break;
                 }
                 if(!isStartSeatID003($req->seats[$i]->seatID)) {
+                    $check = TRUE;
                     $res->isSuccess = FALSE;
                     $res->code = 521;
                     $res->message = "seatID는 003으로 시작해주세요.";
@@ -74,6 +77,7 @@ try {
                     break;
                 }
                 if(!isValidSeatID($req->seats[$i]->seatID)) {
+                    $check = TRUE;
                     $res->isSuccess = FALSE;
                     $res->code = 522;
                     $res->message = "존재하지 않은 seatID입니다.";
@@ -81,6 +85,7 @@ try {
                     break;
                 }
                 if(!isValidPriceType($req->seats[$i]->priceType)) {
+                    $check = TRUE;
                     $res->isSuccess = FALSE;
                     $res->code = 530;
                     $res->message = "priceType은 일반 또는 청소년 또는 우대로 입력해주세요.";
@@ -88,6 +93,7 @@ try {
                     break;
                 }
                 if(!is_numeric($req->seats[$i]->price)) {
+                    $check = TRUE;
                     $res->isSuccess = FALSE;
                     $res->code = 540;
                     $res->message = "price는 숫자를 입력해주세요.";
@@ -95,6 +101,7 @@ try {
                     break;
                 }
             }
+            if($check) break;
             if(!is_numeric($req->totalPrice)) {
                 $res->isSuccess = FALSE;
                 $res->code = 550;
