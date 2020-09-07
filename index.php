@@ -36,6 +36,9 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     $r->addRoute('POST', '/profile', ['UserController', 'profileRegister']);
 
 
+    $r->addRoute('GET', '/reservation/kakaoPaySuccess/{kakaoPayID}', ['ReservationController', 'kakaoPaySuccess']);
+    $r->addRoute('GET', '/reservation/kakaoPayCancle', ['ReservationController', 'kakaoPayCancle']);
+
     /* ********************************************* */
 });
 

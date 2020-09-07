@@ -119,3 +119,11 @@ function priceTypeEncoding($priceType) {
         default: return "priceTypeEncodingError";
     }
 }
+
+
+function paymentMethodEncoding($method) {
+    switch($method) {
+        case "카카오페이": return 100;
+        default : return "paymentMethodEncodingError";
+    }
+}

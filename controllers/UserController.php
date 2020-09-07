@@ -79,7 +79,7 @@ try {
             if(!isValidAuthNumLen($req->authNum)) {
                 $res->isSuccess = FALSE;
                 $res->code = 580;
-                $res->message = "authNum은 6자리 이하의 길이를 입력해주세요.";
+                $res->message = "authNum은 6자리를 입력해주세요.";
                 echo json_encode($res, JSON_NUMERIC_CHECK);
                 break;
             }

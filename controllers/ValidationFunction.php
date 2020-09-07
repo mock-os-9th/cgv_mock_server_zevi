@@ -237,20 +237,18 @@ function isValidScheduleShowBody($req) {
 }
 
 
-function isValidBookingBody($req) {
+function isValidReserveBody($req) {
     $result = TRUE;
-    $check = array(0, 0, 0, 0, 0, 0);
-    $keyCount = 6;
+    $check = array(0, 0, 0, 0);
+    $keyCount = 4;
     if(empty((array)$req)) $result = FALSE;
     else {
         foreach($req as $key => $value) {
             switch($key) {
                 case "scheduleID": $check[0]++; if(gettype($value) == "string") $check[0]++; break;
-                case "seatID": $check[1]++; if(gettype($value) == "string") $check[1]++; break;
-                case "priceType": $check[2]++; if(gettype($value) == "string") $check[2]++; break;
-                case "price": $check[3]++; if(gettype($value) == "integer") $check[3]++; break;
-                case "method": $check[4]++; if(gettype($value) == "string") $check[4]++; break;
-                case "isSuccess": $check[5]++; if(gettype($value) == "boolean") $check[5]++; break;
+                case "seats": $check[1]++; if(gettype($value) == "array") $check[1]++; break;
+                case "totalPrice": $check[2]++; if(gettype($value) == "integer") $check[2]++; break;
+                case "method": $check[3]++; if(gettype($value) == "string") $check[3]++; break;
                 default: return FALSE;
             }
         }
@@ -301,7 +299,7 @@ function isValidPriceType($priceType) {
 //결제 방식 예외처리 추가예정
 function isValidPaymentMethod($method) {
     $result = TRUE;
-    if($method != "1") $result = FALSE;
+    if($method != "카카오페이") $result = FALSE;
     return $result;
 }
 
