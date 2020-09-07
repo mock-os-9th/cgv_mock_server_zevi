@@ -131,9 +131,10 @@ try {
                     $res->code = 400;
                     $res->message = "카카오페이 결제 준비 실패";
                     echo json_encode($res, JSON_NUMERIC_CHECK);
+                    break;
                 }
                 kakaoPayInfoRegister($ready->kakaoPayID, $reservationInfo->reservationID, $ready->tid);
-                unset($ready->kakaoPayID);
+                unset($ready->kakaoPayID); unset($ready->tid);
 
                 $res->result = $ready;
                 $res->isSuccess = TRUE;
@@ -155,7 +156,7 @@ try {
             }
             scheduleCountUpdate($kakaoPayInfo->scheduleID, $kakaoPayInfo->seatCnt); //상영시간표에 count 증가시키기
             kakaoPayAidUpdate($kakaoPayInfo->kakaoPayID, $success->aid); //KakaoPay 테이블에 aid 값과 isCompeleted 1로 update하기
-            reservationStateUpdate($kakaoPayInfo->reservationID); //Reservation 테이블의 state도 100으로 update하기
+            reservationStateUpdate($kakaoPayInfo->reservationID); //Reservation 테이블의 state도 100(결제완료)로 update하기
 
             $res->result = "success";
             $res->isSuccess = TRUE;

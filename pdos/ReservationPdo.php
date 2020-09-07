@@ -83,7 +83,7 @@ function scheduleCountUpdate($schduleID, $seatCnt) {
 function kakaoPayAidUpdate($kakaoPayID, $aid) {
     $pdo = pdoSqlConnect();
     $query = "update KakaoPay
-              set aid=?
+              set aid=?, isCompeleted=1
               where kakaoPayID=?;";
     $st = $pdo->prepare($query);
     $st->execute([$aid, $kakaoPayID]);

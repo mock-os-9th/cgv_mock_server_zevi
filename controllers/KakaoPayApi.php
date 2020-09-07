@@ -23,7 +23,10 @@ function request_curl($url, $is_post=0, $data=array(), $custom_header=null) {
 
 // 결제창 호출
 function kakaoPayReady($reservationInfo) {
-    $http_host = 'http://dev-api.cgvmock.site/reservation'; //실제 배포시 api.cgvmock.site로 설정하기
+    //$http_host = 'http://localhost/reservation'; //로컬 서버
+    $http_host = 'https://dev-api.cgvmock.site/reservation'; //개발 서버
+    $http_host = 'https://api.cgvmock.site/reservation'; //실제 서버
+    
     $adminkey = 'ee4d52c837ae799dcd738ae6e0ced136'; //admin 키
     $cid = 'TC0ONETIME'; //임시 cid
 
