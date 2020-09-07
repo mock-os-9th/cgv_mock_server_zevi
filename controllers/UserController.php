@@ -210,6 +210,35 @@ try {
             $res->message = "로그인 성공";
             echo json_encode($res, JSON_NUMERIC_CHECK);
             break;
+        /*
+         * API No. 11
+         * API Name : 프로필 등록 API
+         * 마지막 수정 날짜 : 20.09.07
+         */
+        case "profileRegister":
+            http_response_code(200);
+            $jwt = $_SERVER["HTTP_X_ACCESS_TOKEN"];
+            if(!isValidHeader($jwt, JWT_SECRET_KEY)) {
+                $res->isSuccess = FALSE;
+                $res->code = 200;
+                $res->message = "올바르지 않은 토큰입니다.";
+                echo json_encode($res, JSON_NUMERIC_CHECK);
+                break;
+            }
+            if(!isValidProfileRegisterBody($req)) {
+                $res->isSuccess = FALSE;
+                $res->code = 500;
+                $res->message = "body 형식이 맞지 않습니다.";
+                echo json_encode($res, JSON_NUMERIC_CHECK);
+                break;
+            }
+            $userData = getDataByJWToken($jwt, JWT_SECRET_KEY);
+            $res->result = profileRegister($userData->id, $userData->pw,$req->image);
+            $res->isSuccess = TRUE;
+            $res->code = 100;
+            $res->message = "프로필 등록 성공";
+            echo json_encode($res, JSON_NUMERIC_CHECK);
+            break;
 
         case "ACCESS_LOGS":
             //            header('content-type text/html charset=utf-8');

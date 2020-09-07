@@ -33,7 +33,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     $r->addRoute('POST', '/schedule', ['ScheduleController', 'scheduleShow']);
     $r->addRoute('GET', '/schedule/{scheduleID}/seats', ['SeatController', 'SeatListShow']);
     $r->addRoute('GET', '/reservation', ['ReservationController', 'reserve']);
-
+    $r->addRoute('POST', '/profile', ['UserController', 'profileRegister']);
 
 
     /* ********************************************* */
