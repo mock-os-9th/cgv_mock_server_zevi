@@ -92,7 +92,7 @@ try {
                 echo json_encode($res, JSON_NUMERIC_CHECK);
                 break;
             }
-            $res->result = "success";
+            $res->result = phoneCertify($req->phone, $req->authNum);
             $res->isSuccess = TRUE;
             $res->code = 100;
             $res->message = "본인인증 완료";
