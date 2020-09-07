@@ -76,6 +76,20 @@ try {
                 echo json_encode($res, JSON_NUMERIC_CHECK);
                 break;
             }
+            if(!isValidAuthNumLen($req->authNum)) {
+                $res->isSuccess = FALSE;
+                $res->code = 580;
+                $res->message = "authNum은 6자리 이하의 길이를 입력해주세요.";
+                echo json_encode($res, JSON_NUMERIC_CHECK);
+                break;
+            }
+            if(!isCertifiedPhone($req->phone, $req->authNum)) {
+                $res->isSuccess = FALSE;
+                $res->code = 532;
+                $res->message = "인증되지 않은 핸드폰 번호입니다.";
+                echo json_encode($res, JSON_NUMERIC_CHECK);
+                break;
+            }
             if(!isValidEmailLen($req->email)) {
                 $res->isSuccess = FALSE;
                 $res->code = 540;

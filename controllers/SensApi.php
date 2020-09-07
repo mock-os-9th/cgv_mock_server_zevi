@@ -42,8 +42,8 @@ function sendMessage($phone, $authNum) {
     curl_setopt($ch, CURLOPT_HEADER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $postFields);
-    //curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); //푸시할때는 주석처리
-    //curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); //푸시할때는 주석처리
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); //푸시할때는 주석처리
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); //푸시할때는 주석처리
 
     $response = curl_exec($ch);
 

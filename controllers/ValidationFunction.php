@@ -3,8 +3,8 @@
 
 function isValidUserJoinBody($req) {
     $result = TRUE;
-    $check = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-    $keyCount = 11;
+    $check = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+    $keyCount = 12;
     if(empty((array)$req)) $result = FALSE;
     else {
         foreach($req as $key => $value) {
@@ -13,13 +13,14 @@ function isValidUserJoinBody($req) {
                 case "pw": $check[1]++; if(gettype($value) == "string") $check[1]++; break;
                 case "name": $check[2]++; if(gettype($value) == "string") $check[2]++; break;
                 case "phone": $check[3]++; if(gettype($value) == "string") $check[3]++; break;
-                case "email": $check[4]++; if(gettype($value) == "string") $check[4]++; break;
-                case "gender": $check[5]++; if(gettype($value) == "string") $check[5]++; break;
-                case "age": $check[6]++; if(gettype($value) == "integer") $check[6]++; break;
-                case "phoneAgree": $check[7]++; if(gettype($value) == "boolean") $check[7]++; break;
-                case "idenAgree": $check[8]++; if(gettype($value) == "boolean") $check[8]++; break;
-                case "telAgree": $check[9]++; if(gettype($value) == "boolean") $check[9]++; break;
-                case "indiAgree": $check[10]++; if(gettype($value) == "boolean") $check[10]++; break;
+                case "authNum": $check[4]++; if(gettype($value) == "string") $check[4]++; break;
+                case "email": $check[5]++; if(gettype($value) == "string") $check[5]++; break;
+                case "gender": $check[6]++; if(gettype($value) == "string") $check[6]++; break;
+                case "age": $check[7]++; if(gettype($value) == "integer") $check[7]++; break;
+                case "phoneAgree": $check[8]++; if(gettype($value) == "boolean") $check[8]++; break;
+                case "idenAgree": $check[9]++; if(gettype($value) == "boolean") $check[9]++; break;
+                case "telAgree": $check[10]++; if(gettype($value) == "boolean") $check[10]++; break;
+                case "indiAgree": $check[11]++; if(gettype($value) == "boolean") $check[11]++; break;
                 default: return FALSE;
             }
         }
@@ -308,5 +309,13 @@ function isValidPaymentMethod($method) {
 function isSuccessPayment($isSuccess) {
     $result = TRUE;
     if($isSuccess != TRUE) $result = FALSE;
+    return $result;
+}
+
+
+function isValidAuthNumLen($authNum) {
+    $result = TRUE;
+    $constAuthNumLen = 6;
+    if(strlen($authNum) != $constAuthNumLen) $result = FALSE;
     return $result;
 }

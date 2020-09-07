@@ -106,3 +106,17 @@ function isSelectedSeat($scheduleID, $seatID) {
     $pdo = null;
     return intval($res[0]["exist"]);
 }
+
+
+function isCertifiedPhone($phone, $authNum) {
+    $pdo = pdoSqlConnect();
+    $query = "SELECT EXISTS(SELECT * FROM Auth WHERE phone = ? and num = ? and isCertified = 1 order by createAt desc limit 1) AS exist;";
+    $st = $pdo->prepare($query);
+    $st->execute([$phone, $authNum]);
+    $st->setFetchMode(PDO::FETCH_ASSOC);
+    $res = $st->fetchAll();
+    $st = null;
+    $pdo = null;
+    return intval($res[0]["exist"]);
+}
+
