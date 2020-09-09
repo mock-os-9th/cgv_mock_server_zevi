@@ -36,7 +36,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     $r->addRoute('GET', '/reservation/kakaoPaySuccess/{kakaoPayID}', ['ReservationController', 'kakaoPaySuccess']);
     $r->addRoute('GET', '/reservation/kakaoPayCancle', ['ReservationController', 'kakaoPayCancle']);
     $r->addRoute('POST', '/profile', ['UserController', 'profileRegister']);
-
+    $r->addRoute('GET', '/movie/{movieID}/review', ['ReviewController', 'reviewListShow']);
 
 
     /* ********************************************* */
@@ -125,6 +125,11 @@ switch ($routeInfo[0]) {
                 $handler = $routeInfo[1][1];
                 $vars = $routeInfo[2];
                 require './controllers/ReservationController.php';
+                break;
+            case 'ReviewController':
+                $handler = $routeInfo[1][1];
+                $vars = $routeInfo[2];
+                require './controllers/ReviewController.php';
                 break;
 
         }
