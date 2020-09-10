@@ -37,3 +37,18 @@ function profileRegister($id, $pw, $image) {
     $pdo = null;
     return "success";
 }
+
+
+function userNameShow($id, $pw) {
+    $pdo = pdoSqlConnect();
+    $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+    $pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
+    $query = "select userID as userID, name as userName from User where id=? and pw=?;";
+    $st = $pdo->prepare($query);
+    $st->execute([$id, $pw]);
+    $st->setFetchMode(PDO::FETCH_ASSOC);
+    $res = $st->fetchAll();
+    $st = null;
+    $pdo = null;
+    return $res;
+}

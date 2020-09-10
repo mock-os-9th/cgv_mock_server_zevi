@@ -233,11 +233,33 @@ try {
                 break;
             }
             $userData = getDataByJWToken($jwt, JWT_SECRET_KEY);
-            $res->result = profileRegister($userData->id, $userData->pw,$req->image);
+            $res->result = profileRegister($userData->id, $userData->pw, $req->image);
             $res->isSuccess = TRUE;
             $res->code = 100;
             $res->message = "프로필 등록 성공";
             echo json_encode($res, JSON_NUMERIC_CHECK);
+            break;
+        /*
+         * API No. 19
+         * API Name : 유저네임 조회 API
+         * 마지막 수정 날짜 : 20.09.10
+         */
+        case "userNameShow":
+            http_response_code(200);
+            $jwt = $_SERVER["HTTP_X_ACCESS_TOKEN"];
+            if(!isValidHeader($jwt, JWT_SECRET_KEY)) {
+                $res->isSuccess = FALSE;
+                $res->code = 200;
+                $res->message = "올바르지 않은 토큰입니다.";
+                echo json_encode($res, JSON_NUMERIC_CHECK);
+                break;
+            }
+            $userData = getDataByJWToken($jwt, JWT_SECRET_KEY);
+            $res->result = userNameShow($userData->id, $userData->pw);
+            $res->isSuccess = TRUE;
+            $res->code = 100;
+            $res->message = "유저네임 조회 성공";
+            echo json_encode($res);
             break;
 
         case "ACCESS_LOGS":
