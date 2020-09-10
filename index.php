@@ -38,9 +38,9 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     $r->addRoute('POST', '/profile', ['UserController', 'profileRegister']);
     $r->addRoute('GET', '/movie/{movieID}/review', ['ReviewController', 'reviewListShow']);
     $r->addRoute('POST', '/movie/{movieID}/review', ['ReviewController', 'reviewRegister']);
-    $r->addRoute('POST', '/movie/{movieID}/review-reply', ['ReviewController', 'reviewRelyRegister']);
+    $r->addRoute('POST', '/movie/{movieID}/review-reply', ['ReviewController', 'reviewReplyRegister']);
     $r->addRoute('POST', '/movie/{movieID}/review-heart', ['ReviewController', 'reviewHeartToggle']);
-
+    $r->addRoute('POST', '/movie/{movieID}/review-reply-heart', ['ReviewController', 'reviewReplyHeartToggle']);
     $r->addRoute('GET', '/username', ['UserController', 'userNameShow']);
 
 

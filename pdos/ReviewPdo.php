@@ -83,7 +83,7 @@ function reviewRegister($id, $pw, $movieID, $comment) {
 }
 
 
-function reviewRelyRegister($id, $pw, $movieID, $reviewID, $comment) {
+function reviewReplyRegister($id, $pw, $movieID, $reviewID, $comment) {
     $pdo = pdoSqlConnect();
     $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     $pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
@@ -173,6 +173,73 @@ function reviewHeartToggle($id, $pw, $movieID, $reviewID) {
                   where reviewID=? and depth=0 and seq=0;";
         $st = $pdo->prepare($query);
         $st->execute([$reviewID]);
+    }
+
+
+    $st = null;
+    $pdo = null;
+    return "success";
+}
+
+
+function reviewReplyHeartToggle($id, $pw, $movieID, $reviewID, $seq) {
+    $pdo = pdoSqlConnect();
+    $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+    $pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
+    $query = "SELECT userID FROM User WHERE id= ? AND pw = ?;";
+    $st = $pdo->prepare($query);
+    $st->execute([$id, $pw]);
+    $st->setFetchMode(PDO::FETCH_ASSOC);
+    $res = $st->fetchAll();
+    $userID = $res[0]['userID'];
+
+    $query = "SELECT EXISTS(SELECT * FROM ReviewHeart WHERE reviewID = ? and depth = 1 and seq = ? and userID = ?) AS exist;";
+    $st = $pdo->prepare($query);
+    $st->execute([$reviewID, $seq, $userID]);
+    $st->setFetchMode(PDO::FETCH_ASSOC);
+    $res = $st->fetchAll();
+    if(intval($res[0]["exist"])) {
+        $query = "update ReviewHeart
+                  set isHeart=1-isHeart
+                  where reviewID=? and depth=1 and seq=? and userID=?;";
+        $st = $pdo->prepare($query);
+        $st->execute([$reviewID, $seq, $userID]);
+
+        $query = "SELECT isHeart FROM ReviewHeart where reviewID=? and depth=1 and seq=? and userID=?;";
+        $st = $pdo->prepare($query);
+        $st->execute([$reviewID, $seq, $userID]);
+        $st->setFetchMode(PDO::FETCH_ASSOC);
+        $res = $st->fetchAll();
+        $isHeart = $res[0]['isHeart'];
+
+        if($isHeart) {
+            $query = "update Review
+                      set heart=heart+1
+                      where reviewID=? and depth=1 and seq=?;";
+            $st = $pdo->prepare($query);
+            $st->execute([$reviewID, $seq]);
+        }
+        else {
+            $query = "update Review
+                      set heart=heart-1
+                      where reviewID=? and depth=1 and seq=?;";
+            $st = $pdo->prepare($query);
+            $st->execute([$reviewID, $seq]);
+        }
+    }
+    else {
+        $query = "INSERT INTO ReviewHeart
+                  (reviewHeartID, reviewID, depth, seq, userID)
+                  VALUES
+                  (CONCAT(\"013\", DATE_FORMAT(NOW(), \"%Y%m%d%H%i%s\"), FLOOR(1000+RAND()*8999)), ?, 1, ?, ?);";
+        $st = $pdo->prepare($query);
+        $st->execute([$reviewID, $seq, $userID]);
+
+        $query = "update Review
+                  set heart=heart+1
+                  where reviewID=? and depth=1 and seq=?;";
+        $st = $pdo->prepare($query);
+        $st->execute([$reviewID, $seq]);
     }
 
 

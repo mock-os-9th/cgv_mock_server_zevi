@@ -96,7 +96,7 @@ try {
          * API Name : 실관람평 댓글 작성 API
          * 마지막 수정 날짜 : 20.09.11
          */
-        case "reviewRelyRegister":
+        case "reviewReplyRegister":
             http_response_code(200);
             $jwt = $_SERVER["HTTP_X_ACCESS_TOKEN"];
             if(!isValidHeader($jwt, JWT_SECRET_KEY)) {
@@ -128,14 +128,14 @@ try {
                 break;
             }
             $userData = getDataByJWToken($jwt, JWT_SECRET_KEY);
-            if(!isValidReviewID($req->reviewID, $userData->id, $userData->pw, $vars['movieID'])) {
+            if(!isValidReviewID($req->reviewID)) {
                 $res->isSuccess = FALSE;
                 $res->code = 520;
                 $res->message = "존재하지 않은 reviewID입니다.";
                 echo json_encode($res, JSON_NUMERIC_CHECK);
                 break;
             }
-            $res->result = reviewRelyRegister($userData->id, $userData->pw, $vars['movieID'], $req->reviewID, $req->comment);
+            $res->result = reviewReplyRegister($userData->id, $userData->pw, $vars['movieID'], $req->reviewID, $req->comment);
             $res->isSuccess = TRUE;
             $res->code = 100;
             $res->message = "실관람평 댓글 작성 성공";
@@ -163,7 +163,7 @@ try {
                 echo json_encode($res);
                 break;
             }
-            if(!isValidReviewHeartRegisterBody($req)) {
+            if(!isValidReviewHeartToggleBody($req)) {
                 $res->isSuccess = FALSE;
                 $res->code = 500;
                 $res->message = "body 형식이 맞지 않습니다.";
@@ -171,7 +171,7 @@ try {
                 break;
             }
             $userData = getDataByJWToken($jwt, JWT_SECRET_KEY);
-            if(!isValidReviewID($req->reviewID, $userData->id, $userData->pw, $vars['movieID'])) {
+            if(!isValidReviewID($req->reviewID)) {
                 $res->isSuccess = FALSE;
                 $res->code = 510;
                 $res->message = "존재하지 않은 reviewID입니다.";
@@ -182,6 +182,49 @@ try {
             $res->isSuccess = TRUE;
             $res->code = 100;
             $res->message = "실관람평 하트 토글 성공";
+            echo json_encode($res);
+            break;
+        /*
+         * API No. 18
+         * API Name : 실관람평 댓글 하트 토글 API
+         * 마지막 수정 날짜 : 20.09.11
+         */
+        case "reviewReplyHeartToggle":
+            http_response_code(200);
+            $jwt = $_SERVER["HTTP_X_ACCESS_TOKEN"];
+            if(!isValidHeader($jwt, JWT_SECRET_KEY)) {
+                $res->isSuccess = FALSE;
+                $res->code = 200;
+                $res->message = "올바르지 않은 토큰입니다.";
+                echo json_encode($res, JSON_NUMERIC_CHECK);
+                break;
+            }
+            if(!isValidMovieID($vars['movieID'])) {
+                $res->isSuccess = FALSE;
+                $res->code = 300;
+                $res->message = "존재하지 않은 movieID입니다.";
+                echo json_encode($res);
+                break;
+            }
+            if(!isValidReviewReplyHeartToggleBody($req)) {
+                $res->isSuccess = FALSE;
+                $res->code = 500;
+                $res->message = "body 형식이 맞지 않습니다.";
+                echo json_encode($res, JSON_NUMERIC_CHECK);
+                break;
+            }
+            $userData = getDataByJWToken($jwt, JWT_SECRET_KEY);
+            if(!isValidReviewReplyID($req->reviewID, $req->seq)) {
+                $res->isSuccess = FALSE;
+                $res->code = 510;
+                $res->message = "존재하지 않은 reviewID, seq입니다.";
+                echo json_encode($res, JSON_NUMERIC_CHECK);
+                break;
+            }
+            $res->result = reviewReplyHeartToggle($userData->id, $userData->pw, $vars['movieID'], $req->reviewID, $req->seq);
+            $res->isSuccess = TRUE;
+            $res->code = 100;
+            $res->message = "실관람평 댓글 하트 토글 성공";
             echo json_encode($res);
             break;
 

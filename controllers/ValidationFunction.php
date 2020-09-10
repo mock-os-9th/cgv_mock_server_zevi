@@ -385,7 +385,7 @@ function isValidReviewReplyRegisterBody($req) {
 }
 
 
-function isValidReviewHeartRegisterBody($req) {
+function isValidReviewHeartToggleBody($req) {
     $result = TRUE;
     $check = array(0);
     $keyCount = 1;
@@ -394,6 +394,26 @@ function isValidReviewHeartRegisterBody($req) {
         foreach($req as $key => $value) {
             switch($key) {
                 case "reviewID": $check[0]++; if(gettype($value) == "string") $check[0]++; break;
+                default: return FALSE;
+            }
+        }
+        for($i=0; $i<$keyCount; $i++)
+            if($check[$i] != 2) { $result=FALSE; break;}
+    }
+    return $result;
+}
+
+
+function isValidReviewReplyHeartToggleBody($req) {
+    $result = TRUE;
+    $check = array(0, 0);
+    $keyCount = 2;
+    if(empty((array)$req)) $result = FALSE;
+    else {
+        foreach($req as $key => $value) {
+            switch($key) {
+                case "reviewID": $check[0]++; if(gettype($value) == "string") $check[0]++; break;
+                case "seq": $check[1]++; if(gettype($value) == "integer") $check[1]++; break;
                 default: return FALSE;
             }
         }

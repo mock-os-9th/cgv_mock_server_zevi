@@ -150,20 +150,11 @@ function isValidRealAudience($id, $pw, $movieID) {
 }
 
 
-function isValidReviewID($reviewID, $id, $pw, $movieID) {
+function isValidReviewID($reviewID) {
     $pdo = pdoSqlConnect();
-    $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-    $pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
-    $query = "SELECT userID FROM User WHERE id= ? AND pw = ?;";
+    $query = "SELECT EXISTS(SELECT * FROM Review WHERE reviewID = ? and depth = 0 and seq = 0) AS exist;";
     $st = $pdo->prepare($query);
-    $st->execute([$id, $pw]);
-    $st->setFetchMode(PDO::FETCH_ASSOC);
-    $res = $st->fetchAll();
-
-    $userID = $res[0]['userID'];
-    $query = "SELECT EXISTS(SELECT * FROM Review WHERE reviewID = ? and depth = 0 and seq = 0 and userID = ? and movieID = ?) AS exist;";
-    $st = $pdo->prepare($query);
-    $st->execute([$reviewID, $userID, $movieID]);
+    $st->execute([$reviewID]);
     $st->setFetchMode(PDO::FETCH_ASSOC);
     $res = $st->fetchAll();
     $st = null;
@@ -171,3 +162,14 @@ function isValidReviewID($reviewID, $id, $pw, $movieID) {
     return intval($res[0]["exist"]);
 }
 
+function isValidReviewReplyID($reviewID, $seq) {
+    $pdo = pdoSqlConnect();
+    $query = "SELECT EXISTS(SELECT * FROM Review WHERE reviewID = ? and depth = 1 and seq = ?) AS exist;";
+    $st = $pdo->prepare($query);
+    $st->execute([$reviewID, $seq]);
+    $st->setFetchMode(PDO::FETCH_ASSOC);
+    $res = $st->fetchAll();
+    $st = null;
+    $pdo = null;
+    return intval($res[0]["exist"]);
+}
