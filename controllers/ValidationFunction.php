@@ -363,3 +363,23 @@ function isValidCommentLen($comment) {
     if(strlen($comment) < $minLen || strlen($comment) > $maxLen) $result = FALSE;
     return $result;
 }
+
+
+function isValidReviewReplyRegisterBody($req) {
+    $result = TRUE;
+    $check = array(0, 0);
+    $keyCount = 2;
+    if(empty((array)$req)) $result = FALSE;
+    else {
+        foreach($req as $key => $value) {
+            switch($key) {
+                case "comment": $check[0]++; if(gettype($value) == "string") $check[0]++; break;
+                case "reviewID": $check[1]++; if(gettype($value) == "string") $check[1]++; break;
+                default: return FALSE;
+            }
+        }
+        for($i=0; $i<$keyCount; $i++)
+            if($check[$i] != 2) { $result=FALSE; break;}
+    }
+    return $result;
+}

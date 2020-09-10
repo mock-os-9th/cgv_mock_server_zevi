@@ -34,11 +34,12 @@ function reviewListShow($movieID)
     for($i=0; $i<$resCnt; $i++) {
         $res[$i]['reply'] = new stdClass;
         $query = "select r.reviewID as reviewID,
-                     concat(substr(u.id, 1, 2), '**', substr(u.id, 5)) as id,
-                     p.image as profileImage,
-                     r.comment as comment,
-                     if(date_sub(now(), interval 1 hour) < r.createAt, '방금 전', replace(replace(date_format(r.createAt, '%m월 %d일 %p %l:%i'), 'AM', '오전'), 'PM', '오후')) as time,
-                     r.heart as heart
+                         r.seq as seq,
+                         concat(substr(u.id, 1, 2), '**', substr(u.id, 5)) as id,
+                         p.image as profileImage,
+                         r.comment as comment,
+                         if(date_sub(now(), interval 1 hour) < r.createAt, '방금 전', replace(replace(date_format(r.createAt, '%m월 %d일 %p %l:%i'), 'AM', '오전'), 'PM', '오후')) as time,
+                         r.heart as heart
                   from Review r
                   left join User u on u.userID=r.userID
                   left join Profile p on p.userID=r.userID
@@ -76,6 +77,38 @@ function reviewRegister($id, $pw, $movieID, $comment) {
               (CONCAT(\"012\", DATE_FORMAT(NOW(), \"%Y%m%d%H%i%s\"), FLOOR(1000+RAND()*8999)), ?, ?, ?);";
     $st = $pdo->prepare($query);
     $st->execute([$userID, $movieID, $comment]);
+    $st = null;
+    $pdo = null;
+    return "success";
+}
+
+
+function reviewRelyRegister($id, $pw, $movieID, $reviewID, $comment) {
+    $pdo = pdoSqlConnect();
+    $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+    $pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
+    $query = "SELECT userID FROM User WHERE id= ? AND pw = ?;";
+    $st = $pdo->prepare($query);
+    $st->execute([$id, $pw]);
+    $st->setFetchMode(PDO::FETCH_ASSOC);
+    $res = $st->fetchAll();
+    $userID = $res[0]['userID'];
+
+    $query = "SELECT ifnull(max(seq), 'none') as seq FROM Review WHERE reviewID=? and depth=1;";
+    $st = $pdo->prepare($query);
+    $st->execute([$reviewID]);
+    $st->setFetchMode(PDO::FETCH_ASSOC);
+    $res = $st->fetchAll();
+    if($res[0]['seq'] == "none") $nextSeq = 0;
+    else $nextSeq = $res[0]['seq'] + 1;
+
+    $pdo = pdoSqlConnect();
+    $query = "INSERT INTO Review
+              (reviewID, depth, seq, userID, movieID, comment)
+              VALUES
+              (?, 1, ?, ?, ?, ?);";
+    $st = $pdo->prepare($query);
+    $st->execute([$reviewID, $nextSeq, $userID, $movieID, $comment]);
     $st = null;
     $pdo = null;
     return "success";

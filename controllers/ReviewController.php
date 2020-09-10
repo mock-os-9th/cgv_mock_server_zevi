@@ -91,6 +91,56 @@ try {
             $res->message = "실관람평 작성 성공";
             echo json_encode($res);
             break;
+        /*
+         * API No. 16
+         * API Name : 실관람평 댓글 작성 API
+         * 마지막 수정 날짜 : 20.09.11
+         */
+        case "reviewRelyRegister":
+            http_response_code(200);
+            $jwt = $_SERVER["HTTP_X_ACCESS_TOKEN"];
+            if(!isValidHeader($jwt, JWT_SECRET_KEY)) {
+                $res->isSuccess = FALSE;
+                $res->code = 200;
+                $res->message = "올바르지 않은 토큰입니다.";
+                echo json_encode($res, JSON_NUMERIC_CHECK);
+                break;
+            }
+            if(!isValidMovieID($vars['movieID'])) {
+                $res->isSuccess = FALSE;
+                $res->code = 300;
+                $res->message = "존재하지 않은 movieID입니다.";
+                echo json_encode($res);
+                break;
+            }
+            if(!isValidReviewReplyRegisterBody($req)) {
+                $res->isSuccess = FALSE;
+                $res->code = 500;
+                $res->message = "body 형식이 맞지 않습니다.";
+                echo json_encode($res, JSON_NUMERIC_CHECK);
+                break;
+            }
+            if(!isValidCommentLen($req->comment)) {
+                $res->isSuccess = FALSE;
+                $res->code = 510;
+                $res->message = "comment는 10이상 255이하의 길이를 입력해주세요.";
+                echo json_encode($res, JSON_NUMERIC_CHECK);
+                break;
+            }
+            $userData = getDataByJWToken($jwt, JWT_SECRET_KEY);
+            if(!isValidReviewID($req->reviewID, $userData->id, $userData->pw, $vars['movieID'])) {
+                $res->isSuccess = FALSE;
+                $res->code = 520;
+                $res->message = "존재하지 않은 reviewID입니다.";
+                echo json_encode($res, JSON_NUMERIC_CHECK);
+                break;
+            }
+            $res->result = reviewRelyRegister($userData->id, $userData->pw, $vars['movieID'], $req->reviewID, $req->comment);
+            $res->isSuccess = TRUE;
+            $res->code = 100;
+            $res->message = "실관람평 댓글 작성 성공";
+            echo json_encode($res);
+            break;
 
 
         case "ACCESS_LOGS":
