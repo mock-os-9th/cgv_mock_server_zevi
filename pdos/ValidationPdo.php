@@ -127,3 +127,24 @@ function isCertifiedPhone($phone, $authNum) {
     return intval($res[0]["exist"]);
 }
 
+
+function isValidRealAudience($id, $pw, $movieID) {
+    $pdo = pdoSqlConnect();
+    $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+    $pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
+    $query = "SELECT userID FROM User WHERE id= ? AND pw = ?;";
+    $st = $pdo->prepare($query);
+    $st->execute([$id, $pw]);
+    $st->setFetchMode(PDO::FETCH_ASSOC);
+    $res = $st->fetchAll();
+
+    $userID = $res[0]['userID'];
+    $query = "SELECT EXISTS(select * from Reservation r join Schedule s on s.scheduleID=r.scheduleID where s.movieID=? and r.userID=? and r.state=100) AS exist;";
+    $st = $pdo->prepare($query);
+    $st->execute([$movieID, $userID]);
+    $st->setFetchMode(PDO::FETCH_ASSOC);
+    $res = $st->fetchAll();
+    $st = null;
+    $pdo = null;
+    return intval($res[0]["exist"]);
+}

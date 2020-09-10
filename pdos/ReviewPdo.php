@@ -56,3 +56,27 @@ function reviewListShow($movieID)
 
     return $res;
 }
+
+
+function reviewRegister($id, $pw, $movieID, $comment) {
+    $pdo = pdoSqlConnect();
+    $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+    $pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
+    $query = "SELECT userID FROM User WHERE id= ? AND pw = ?;";
+    $st = $pdo->prepare($query);
+    $st->execute([$id, $pw]);
+    $st->setFetchMode(PDO::FETCH_ASSOC);
+    $res = $st->fetchAll();
+
+    $userID = $res[0]['userID'];
+    $pdo = pdoSqlConnect();
+    $query = "INSERT INTO Review
+              (reviewID, userID, movieID, comment)
+              VALUES
+              (CONCAT(\"012\", DATE_FORMAT(NOW(), \"%Y%m%d%H%i%s\"), FLOOR(1000+RAND()*8999)), ?, ?, ?);";
+    $st = $pdo->prepare($query);
+    $st->execute([$userID, $movieID, $comment]);
+    $st = null;
+    $pdo = null;
+    return "success";
+}

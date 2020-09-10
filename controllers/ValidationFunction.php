@@ -336,3 +336,30 @@ function isValidProfileRegisterBody($req) {
     }
     return $result;
 }
+
+
+function isValidReviewRegisterBody($req) {
+    $result = TRUE;
+    $check = array(0);
+    $keyCount = 1;
+    if(empty((array)$req)) $result = FALSE;
+    else {
+        foreach($req as $key => $value) {
+            switch($key) {
+                case "comment": $check[0]++; if(gettype($value) == "string") $check[0]++; break;
+                default: return FALSE;
+            }
+        }
+        for($i=0; $i<$keyCount; $i++)
+            if($check[$i] != 2) { $result=FALSE; break;}
+    }
+    return $result;
+}
+
+
+function isValidCommentLen($comment) {
+    $result = TRUE;
+    $minLen = 10; $maxLen = 255;
+    if(strlen($comment) < $minLen || strlen($comment) > $maxLen) $result = FALSE;
+    return $result;
+}
