@@ -170,3 +170,4 @@ function isValidReviewID($reviewID, $id, $pw, $movieID) {
     $pdo = null;
     return intval($res[0]["exist"]);
 }
+

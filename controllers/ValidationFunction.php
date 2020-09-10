@@ -383,3 +383,22 @@ function isValidReviewReplyRegisterBody($req) {
     }
     return $result;
 }
+
+
+function isValidReviewHeartRegisterBody($req) {
+    $result = TRUE;
+    $check = array(0);
+    $keyCount = 1;
+    if(empty((array)$req)) $result = FALSE;
+    else {
+        foreach($req as $key => $value) {
+            switch($key) {
+                case "reviewID": $check[0]++; if(gettype($value) == "string") $check[0]++; break;
+                default: return FALSE;
+            }
+        }
+        for($i=0; $i<$keyCount; $i++)
+            if($check[$i] != 2) { $result=FALSE; break;}
+    }
+    return $result;
+}

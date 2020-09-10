@@ -19,9 +19,9 @@ function reservationReady($id, $pw, $scheduleID, $seats, $method) {
     $seatCnt = count($seats);
     for($i=0; $i<$seatCnt; $i++) {
         $query = "INSERT INTO Reservation
-              (reservationID, userID, scheduleID, seatID, priceType, price, method, state)
-              VALUES
-              (?, ?, ?, ?, ?, ?, ?, ?);";
+                  (reservationID, userID, scheduleID, seatID, priceType, price, method, state)
+                  VALUES
+                  (?, ?, ?, ?, ?, ?, ?, ?);";
         $st = $pdo->prepare($query);
         $st->execute([$reservationID, $userID, $scheduleID, $seats[$i]->seatID, $seats[$i]->priceType, $seats[$i]->price, $method, $paymentReadyState]);
     }
